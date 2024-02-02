@@ -1,0 +1,19 @@
+<div class="flex">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+
+    <div class="user">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" formControlName="username">
+    </div>
+    <div class="pass">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" formControlName="password">
+    </div>
+  </div>
+
+    <button class="btn btn-login" type="submit" value="Login" (click)="login()">Login</button>
+    <button class="btn btn-register" type="submit" value="Register" (click)="register()">Register</button>
+  </form>
+
+</div>
