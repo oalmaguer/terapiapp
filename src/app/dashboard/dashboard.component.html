@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="content">
+  <button class="btn" *ngIf="(afAuth.user | async)" (click)="logOut()">LOGOUT</button>
+  <h1>Welcome {{user?.email}}</h1>
+
+  </div>
+</div>
+
