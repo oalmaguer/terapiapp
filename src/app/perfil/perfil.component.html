@@ -1,0 +1,25 @@
+<div class="image text">
+  <label for="fileInput">
+    <img
+      [src]="imageUrl"
+      class="image"
+      alt="Image"
+      *ngIf="imageUrl"
+      (click)="img.click()"
+    />
+  </label>
+  <input
+    #img
+    type="file"
+    (change)="onImageSelected($event)"
+    [ngStyle]="!imageUrl ? { display: 'block' } : { display: 'none' }"
+  />
+  <button class="btn" *ngIf="imageUrl" (click)="uploadImage()">
+    Set as image profile
+  </button>
+  <p *ngIf="successMessage">Tu imagen ha sido actualizada!</p>
+</div>
+
+<div>
+  <p>Your doctor is: {{ userDoctor }}</p>
+</div>

@@ -1,6 +1,39 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  min-height: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.image {
+  display: flex;
   gap: 1rem;
-  background-color: lightblue;
+  align-items: center;
+  background-color: #5c5470;
+  justify-content: center;
+}
+
+.img {
+  border-radius: 50%;
+  width: 80px;
+  margin: 1rem;
+}
+
+.image-info {
+  font-size: 1rem;
+  margin: 1rem;
+}
+
+.menus {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.text {
+  font-weight: 300;
 }

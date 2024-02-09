@@ -1,5 +1,27 @@
 <div class="container">
-  <div class="item">Inicio</div>
-  <div class="item">Perfil</div>
-  <div class="item">Ejercicios</div>
+  <div class="image">
+    <div class="image-box">
+      <img
+        class="img"
+        src="http://via.placeholder.com/360x360
+      "
+        alt="logo"
+      />
+    </div>
+    <div class="image-info">
+      <h2>Oliver Almaguer</h2>
+      <button (click)="logOut()"><span class="text">Logout</span></button>
+    </div>
+  </div>
+
+  <div class="menus">
+    <div class="item"><a [routerLink]="['/dashboard']">Inicio</a></div>
+    <div class="item"><a [routerLink]="['/perfil']">Perfil</a></div>
+    <div class="item"><a [routerLink]="['/ejercicios']">Ejercicios</a></div>
+    <div class="item"><a [routerLink]="['/admin']">Admin</a></div>
+
+    <div class="item">
+      <button class="btn" (click)="logOut()">Logout</button>
+    </div>
+  </div>
 </div>

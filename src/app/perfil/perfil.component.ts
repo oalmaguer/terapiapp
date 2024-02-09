@@ -1,50 +1,49 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { UsersService } from '../users.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { first } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
+import { UsersService } from '../users.service';
+import { doc } from '@angular/fire/firestore';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-perfil',
+  templateUrl: './perfil.component.html',
+  styleUrls: ['./perfil.component.scss'],
 })
-export class DashboardComponent {
+export class PerfilComponent {
   constructor(
-    private usersService: UsersService,
-    public afAuth: AngularFireAuth,
-    private router: Router,
-    private route: ActivatedRoute,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private usersService: UsersService
   ) {}
-
   user: any;
   currentUser;
   imageUrl: any;
   imageFile: any;
   successMessage = false;
-  ngOnInit(): void {
+  userDoctor = '';
+
+  ngOnInit() {
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       if (elem) {
         console.log(elem);
         this.user = elem;
-        // this.getUserData(this.user);
+        this.getUserImage(this.user);
+        this.getUserDoctors(this.user.doctor);
       }
     });
   }
 
-  getUserData(userData) {
-    userData;
-    console.log(userData);
-    let user = this.supabaseService.userInformation(userData);
-    user.then((elem) => {
-      this.user = elem.data[0];
-      this.getUserImage(this.user);
+  getUserDoctors(doctorId) {
+    console.log(doctorId);
+    this.supabaseService.getDoctors(doctorId).then((doctor) => {
+      console.log(doctor);
+      if (doctor.data.length > 0) {
+        console.log('Doctor', doctor.data[0]);
+        this.userDoctor = doctor.data[0].name;
+        console.log('userDoctor', this.userDoctor);
+      } else {
+        this.userDoctor = 'No tiene doctor asignado';
+      }
     });
   }
-
   async uploadImage() {
     const { data, error } = await this.supabaseService
       .getStorage()

@@ -1,0 +1,62 @@
+<div class="flex">
+  <form [formGroup]="userForm">
+    <div class="form-container">
+      <div class="user">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          formControlName="username"
+        />
+      </div>
+      <div class="pass">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+        />
+      </div>
+      <div class="pass">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+      </div>
+      <div class="pass">
+        <label for="cellphone">Telefono:</label>
+        <input
+          type="number"
+          class="form-control"
+          id="cellphone"
+          formControlName="cellphone"
+        />
+      </div>
+    </div>
+
+    <button
+      class="btn btn-register"
+      type="submit"
+      value="Register"
+      (click)="register()"
+      style="margin-bottom: 1rem"
+    >
+      Register
+    </button>
+    <button
+      class="btn btn-register"
+      type="submit"
+      value="Register"
+      (click)="update()"
+      style="margin-bottom: 1rem"
+    >
+      Update
+    </button>
+    <a [routerLink]="['/login']" class="links">Login</a>
+  </form>
+</div>

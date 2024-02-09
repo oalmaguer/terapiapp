@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,14 +16,24 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
+import { RegisterComponent } from './register/register.component';
+import { EjercicioComponent } from './ejercicio/ejercicio.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { AdminComponent } from './admin/admin.component';
+import { SupabaseService } from './supabase.service';
+import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    RegisterComponent,
+    EjercicioComponent,
+    PerfilComponent,
+    AdminComponent,
+    RegisterDoctorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,12 +44,23 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase )),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    SupabaseService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeSupabase,
+      deps: [SupabaseService],
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
+
+export function initializeSupabase(supabaseService: SupabaseService) {
+  return () => supabaseService.getSession();
+}

@@ -1,0 +1,15 @@
+.videos {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.video-info {
+  min-height: 100px;
+  background-color: whitesmoke;
+  border-radius: 2px;
+  padding: 2rem;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}

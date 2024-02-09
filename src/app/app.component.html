@@ -1,3 +1,6 @@
-<router-outlet></router-outlet>
-
-
+<div style="display: flex" [ngClass]="{ 'center-login': !userLoggedIn }">
+  <div class="sidebar" *ngIf="userLoggedIn" style="margin-right: 2rem">
+    <app-sidebar></app-sidebar>
+  </div>
+  <router-outlet></router-outlet>
+</div>

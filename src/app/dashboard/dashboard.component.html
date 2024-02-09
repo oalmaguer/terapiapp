@@ -1,12 +1,19 @@
 <div class="container">
-  <div class="sidebar">
-    <app-sidebar></app-sidebar>
-  </div>
-
   <div class="content">
-  <button class="btn" *ngIf="(afAuth.user | async)" (click)="logOut()">LOGOUT</button>
-  <h1>Welcome {{user?.email}}</h1>
+    <h1>
+      Bienvenido: <span class="text"> {{ user?.username }}</span>
+    </h1>
 
+    <div class="card">
+      <div class="background">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
+          perferendis quam omnis iusto veniam debitis vero? Accusantium
+          excepturi repellendus officiis illo? Vitae maxime mollitia iusto
+          labore iste perferendis, tempora facere.
+        </p>
+        <button>Ver mis ejercicios</button>
+      </div>
+    </div>
   </div>
 </div>
-

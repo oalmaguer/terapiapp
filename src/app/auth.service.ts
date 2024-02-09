@@ -1,20 +1,23 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, first, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   isLoggedIn;
-  constructor(  public afs: AngularFirestore, // Inject Firestore service
-  public afAuth: AngularFireAuth, // Inject Firebase auth service
-  public router: Router,
-  public ngZone: NgZone) {
-
-  }
+  constructor(
+    public afs: AngularFirestore, // Inject Firestore service
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public router: Router,
+    public ngZone: NgZone
+  ) {}
 
   SignIn(email, password) {
     return this.afAuth
@@ -22,7 +25,6 @@ export class AuthService {
       .then((result) => {
         // this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
-          console.log(user);
           this.navigateToDashboard();
         });
       })
@@ -31,13 +33,12 @@ export class AuthService {
       });
   }
   private navigateToDashboard() {
-  this.afAuth.authState.subscribe((user) => {
-    console.log(user);
-    if (user) {
-      this.router.navigate(['dashboard']);
-    }
-  });
-}
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['dashboard']);
+      }
+    });
+  }
 
   SignUp(email: string, password: string) {
     return this.afAuth
@@ -54,31 +55,30 @@ export class AuthService {
       });
   }
 
-    // Send email verfificaiton when new user sign up
-    SendVerificationMail() {
-      return this.afAuth.currentUser
-        .then((u: any) => u.sendEmailVerification())
-        .then(() => {
-          this.router.navigate(['verify-email-address']);
-        });
-    }
-
-    SetUserData(user: any) {
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-        `users/${user.uid}`
-      );
-      const userData: any = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified,
-      };
-      return userRef.set(userData, {
-        merge: true,
+  // Send email verfificaiton when new user sign up
+  SendVerificationMail() {
+    return this.afAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .then(() => {
+        this.router.navigate(['verify-email-address']);
       });
-    }
+  }
 
-      // Returns true when user is looged in and email is verified
+  SetUserData(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+    const userData: any = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
+  }
 
+  // Returns true when user is looged in and email is verified
 }
