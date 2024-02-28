@@ -22,6 +22,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AdminComponent } from './admin/admin.component';
 import { SupabaseService } from './supabase.service';
 import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
+import { NotasComponent } from './notas/notas.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RegisterDoctorsComponent } from './register-doctors/register-doctors.co
     PerfilComponent,
     AdminComponent,
     RegisterDoctorsComponent,
+    NotasComponent,
   ],
   imports: [
     BrowserModule,

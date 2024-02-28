@@ -12,7 +12,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  background-color: #5c5470;
+  background-color: #bababa;
   justify-content: center;
 }
 
@@ -30,10 +30,21 @@
 .menus {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
+  gap: 1rem;
+  margin-left: 2rem;
+  font-size: 1.4rem;
 }
 
 .text {
   font-weight: 300;
+}
+
+.copyright {
+  flex: 1;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+  /* padding: 1rem; */
+  justify-content: center;
 }

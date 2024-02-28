@@ -1,20 +1,27 @@
 .flex {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+  min-height: 420px;
+  width: 350px;
+  margin-top: 2rem;
 }
 
 .btn {
-  padding: 0.5rem;
-  padding-inline: 1rem;
+  padding: 0.3rem;
   border: 1px solid B4D4FF;
   border-radius: 4px;
   margin-top: 1rem;
-  background-color: #176b87;
+  background-color: #99bc85;
   color: whitesmoke;
   width: 100%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #769166;
 }
 
 .user,
@@ -32,6 +39,45 @@
 .form-container input {
   padding-inline: 1rem;
   padding-block: 0.3rem;
-  border: 1px solid rgb(97, 97, 97);
+  border: 1px solid #d3d3d3;
   border-radius: 4px;
+  background-color: #e1f0da;
+}
+
+.links {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.links:hover {
+  text-decoration: underline;
+  color: #176b87;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.line {
+  width: 100%;
+  background-color: #d3d3d3;
+  height: 1px;
+  margin-top: 1.5rem;
+}
+
+.container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 180px;
+  height: 180px;
 }

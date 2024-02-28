@@ -23,7 +23,6 @@ export class PerfilComponent {
   ngOnInit() {
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       if (elem) {
-        console.log(elem);
         this.user = elem;
         this.getUserImage(this.user);
         this.getUserDoctors(this.user.doctor);
@@ -32,13 +31,10 @@ export class PerfilComponent {
   }
 
   getUserDoctors(doctorId) {
-    console.log(doctorId);
     this.supabaseService.getDoctors(doctorId).then((doctor) => {
-      console.log(doctor);
       if (doctor.data.length > 0) {
-        console.log('Doctor', doctor.data[0]);
+        console.log(doctor);
         this.userDoctor = doctor.data[0].name;
-        console.log('userDoctor', this.userDoctor);
       } else {
         this.userDoctor = 'No tiene doctor asignado';
       }

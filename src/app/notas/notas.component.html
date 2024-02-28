@@ -1,0 +1,43 @@
+<div class="container">
+  <div *ngIf="userRole !== 'customer'" class="form">
+    <h1>Selecciona un paciente</h1>
+    <form [formGroup]="adminForm">
+      <div class="form-group" *ngIf="patients">
+        <select class="select-patients" formControlName="patient">
+          <option *ngFor="let patient of patients" value="{{ patient.id }}">
+            {{ patient.name }}
+          </option>
+        </select>
+      </div>
+
+      <ng-container *ngIf="selectedPatient">
+        <div class="patient-container">
+          <img
+            src="{{
+              patientImageUrl
+                ? patientImageUrl
+                : 'https://picsum.photos/300/250'
+            }}"
+            alt=""
+          />
+          <p><span>Nombre: </span> {{ selectedPatient.name }}</p>
+          <p><span>Correo: </span>{{ selectedPatient.email }}</p>
+          <p><span>Telefono: </span>{{ selectedPatient.phone }}</p>
+          <textarea
+            formControlName="note"
+            placeholder="Escribe una nota para tu paciente"
+          >
+          </textarea>
+          <button class="btn" (click)="onSubmit()">Guardar</button>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+  <div class="notes" *ngIf="patientNotes">
+    <h1>Notas anteriores</h1>
+    <div *ngFor="let nota of patientNotes" class="note">
+      <p>{{ nota.note }}</p>
+      <p>Fecha de creacion: {{ nota.created_at | date : "dd/MM/yyyy" }}</p>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import { EjercicioComponent } from './ejercicio/ejercicio.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
+import { NotasComponent } from './notas/notas.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -19,10 +20,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'registerDoctors', component: RegisterDoctorsComponent },
+  {
+    path: 'registerDoctors',
+    component: RegisterDoctorsComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'ejercicios',
     component: EjercicioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'notas',
+    component: NotasComponent,
     canActivate: [AuthGuard],
   },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },

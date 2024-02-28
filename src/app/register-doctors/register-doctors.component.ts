@@ -31,8 +31,6 @@ export class RegisterDoctorsComponent {
   }
 
   update() {
-    this.supabaseService.updateDocInfo(this.userForm.value).then((elem) => {
-      console.log('UPdate: ', elem);
-    });
+    this.supabaseService.updateDocInfo(this.userForm.value).then((elem) => {});
   }
 }

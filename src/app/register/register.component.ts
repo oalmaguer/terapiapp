@@ -25,7 +25,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       password: ['', Validators.required],
       email: ['', Validators.required],
       cellphone: ['', Validators.required],
@@ -37,7 +37,7 @@ export class RegisterComponent {
         this.userForm.value.email,
         this.userForm.value.password,
         this.userForm.value.cellphone,
-        this.userForm.value.username
+        this.userForm.value.name
       )
       .then((elem) => {
         this.update();

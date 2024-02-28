@@ -1,5 +1,5 @@
-<div class="videos">
-  <div class="video" *ngFor="let video of videos">
+<div class="videos" *ngIf="hasVideos">
+  <div class="video" *ngFor="let video of videos; let i = index">
     <iframe
       width="350"
       height="200"
@@ -8,7 +8,27 @@
     ></iframe>
     <div class="video-info">
       <div class="text">{{ video.name }}</div>
-      <button>Ver video</button>
+      <div class="form-group" *ngIf="patients">
+        <form [formGroup]="adminForm">
+          <h1>Selecciona un paciente para asignarle este video</h1>
+          <select
+            class="select-patients"
+            formControlName="patient"
+            (change)="onPatientSelect(video.id, $event.target.value)"
+          >
+            <option *ngFor="let patient of patients" value="{{ patient.id }}">
+              {{ patient.name }}
+            </option>
+          </select>
+          <button
+            *ngIf="selectedPatient && video.id == selectedVideoId"
+            class="btn"
+            (click)="assignVideo(video.id, adminForm.value.patient)"
+          >
+            Asignar
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

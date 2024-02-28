@@ -16,8 +16,12 @@
   background-color: #99bc85;
   color: whitesmoke;
   width: 100%;
+  transition: background-color 0.5s ease-in-out;
 }
 
+.btn:hover {
+  background-color: #769166;
+}
 .user,
 .pass {
   display: flex;

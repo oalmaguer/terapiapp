@@ -1,8 +1,9 @@
 import { Injectable, APP_INITIALIZER, NgModule } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
+import * as e from 'cors';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { SessionService } from './session.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,17 +26,6 @@ export class SupabaseService {
           data.then((elem) => {
             this.userSupabaseData$.next(elem.data[0]);
           });
-        }
-        if (event === 'INITIAL_SESSION') {
-          // handle initial session
-          this.userData$.next(session.user);
-          const data = this.userInformation(session.user);
-          data.then((elem) => {
-            this.userSupabaseData$.next(elem.data[0]);
-          });
-        } else if (event === 'SIGNED_IN') {
-          // handle sign in event
-          this.userData$.next(session.user);
         } else if (event === 'SIGNED_OUT') {
           // handle sign out event
         } else if (event === 'PASSWORD_RECOVERY') {
@@ -49,11 +39,11 @@ export class SupabaseService {
     );
   }
 
-  async signUp(email, password: string, phone, username) {
+  async signUp(email, password: string, phone, name) {
     try {
       let data = await this.supa_client.auth.signUp({ email, password });
       if (data) {
-        this.insertProfile({ email, password, phone, username });
+        this.insertProfile({ email, password, phone, name });
       }
       return data;
     } catch (err) {
@@ -75,10 +65,11 @@ export class SupabaseService {
   }
 
   insertProfile(user) {
+    console.log(user);
     return this.supa_client
       .from('users')
       .insert({
-        username: user.username,
+        name: user.username,
         phone: user.phone,
         email: user.email,
       })
@@ -118,6 +109,9 @@ export class SupabaseService {
       .select('*')
       .eq('email', user.email);
   }
+  async getPatients() {
+    return await this.supa_client.from('users').select('*');
+  }
 
   getSession() {
     return this.supa_client.auth.getSession();
@@ -133,6 +127,38 @@ export class SupabaseService {
 
   getDoctors(doctorId) {
     return this.supa_client.from('doctors').select('*').eq('id', doctorId);
+  }
+
+  async writeNote(userId, note) {
+    return await this.supa_client
+      .from('notes')
+      .insert({
+        id: userId,
+        note: `${note}`,
+      })
+      .eq('id', userId);
+  }
+
+  async getNotes(userId) {
+    return await this.supa_client.from('notes').select('*').eq('id', userId);
+  }
+
+  async assignVideo(userVideos, videoId, patiendId) {
+    let videos = [];
+    if (!userVideos) {
+      videos = [videoId];
+    } else {
+      videos = [...userVideos, videoId];
+    }
+
+    let rmDup = new Set(videos.map((elem) => parseInt(elem)));
+    console.log(userVideos, videoId, patiendId);
+    console.log(rmDup);
+
+    return await this.supa_client
+      .from('users')
+      .update([{ video: Array.from(rmDup) }])
+      .eq('id', patiendId);
   }
 
   async getExercises() {}

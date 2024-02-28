@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { UsersService } from '../users.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { first } from 'rxjs';
@@ -12,6 +11,12 @@ import { SupabaseService } from '../supabase.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+  user: any;
+  currentUser;
+  imageUrl: any;
+  imageFile: any;
+  successMessage = false;
+  userRole: string;
   constructor(
     private usersService: UsersService,
     public afAuth: AngularFireAuth,
@@ -19,25 +24,22 @@ export class DashboardComponent {
     private route: ActivatedRoute,
     private supabaseService: SupabaseService
   ) {}
-
-  user: any;
-  currentUser;
-  imageUrl: any;
-  imageFile: any;
-  successMessage = false;
   ngOnInit(): void {
-    this.supabaseService.userSupabaseData$.subscribe((elem) => {
-      if (elem) {
-        console.log(elem);
-        this.user = elem;
-        // this.getUserData(this.user);
-      }
+    this.supabaseService.userData$.subscribe((elem) => {
+      // if (elem) {
+      //   this.userRole = elem.role;
+      //   this.user = elem;
+      //   // this.getUserData(this.user);
+      // }
+      this.supabaseService.userInformation(elem).then((user) => {
+        // this.user = user.data[0];
+        // this.getUserImage(this.user);
+        this.user = user.data[0];
+      });
     });
   }
 
   getUserData(userData) {
-    userData;
-    console.log(userData);
     let user = this.supabaseService.userInformation(userData);
     user.then((elem) => {
       this.user = elem.data[0];
