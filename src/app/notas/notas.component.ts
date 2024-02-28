@@ -82,7 +82,7 @@ export class NotasComponent {
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
         console.log(data);
-        if (data.data.length > 0) {
+        if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;
         }

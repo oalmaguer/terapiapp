@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { UsersService } from '../users.service';
 import { doc } from '@angular/fire/firestore';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
@@ -13,6 +14,7 @@ export class PerfilComponent {
     private supabaseService: SupabaseService,
     private usersService: UsersService
   ) {}
+  userForm: FormGroup = new FormGroup({});
   user: any;
   currentUser;
   imageUrl: any;
@@ -21,6 +23,14 @@ export class PerfilComponent {
   userDoctor = '';
 
   ngOnInit() {
+    this.userForm = new FormGroup({
+      name: new FormControl(),
+      email: new FormControl(),
+      image: new FormControl(),
+      skill: new FormControl(),
+      phone: new FormControl(),
+
+    });
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
@@ -35,6 +45,14 @@ export class PerfilComponent {
       if (doctor.data.length > 0) {
         console.log(doctor);
         this.userDoctor = doctor.data[0].name;
+        let skill = doctor.data[0].skill;
+        console.log(skill);
+        this.userForm.patchValue({
+          name:  this.userDoctor,
+          email: this.user.email,
+          phone: this.user.phone,
+          skill: skill
+        })
       } else {
         this.userDoctor = 'No tiene doctor asignado';
       }
@@ -78,5 +96,9 @@ export class PerfilComponent {
     this.imageUrl = URL.createObjectURL(file);
 
     // showOverlay.value = true;
+  }
+
+  onSubmit() {
+    console.log(this.user);
   }
 }

@@ -1,5 +1,4 @@
 .container {
-  width: 100vw;
   padding: 2rem;
   display: flex;
   gap: 10rem;
@@ -64,6 +63,7 @@
 }
 
 .notes {
+  width: 100%;
   margin-top: 1rem;
   flex: 1;
   background-color: #ededed;
@@ -72,8 +72,15 @@
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
+.no-notes {
+  width: 500px;
+}
+
 .notes h1 {
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .note {

@@ -1,3 +1,6 @@
+<div class="container">
+
+
 <div class="image text">
   <label for="fileInput">
     <img
@@ -18,8 +21,20 @@
     Set as image profile
   </button>
   <p *ngIf="successMessage">Tu imagen ha sido actualizada!</p>
+  <div>
+    <p>Your doctor is: {{ userDoctor }}</p>
+  </div>
 </div>
 
-<div>
-  <p>Your doctor is: {{ userDoctor }}</p>
+<div class="form">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <input type="text" formControlName="name" placeholder="Name" />
+      <input type="text" formControlName="phone" placeholder="Phone" />
+      <input type="email" formControlName="email" placeholder="Email" />
+      <input type="text" formControlName="skill"placeholder="Skill"/>
+    </div>
+  </form>
+</div>
+
 </div>

@@ -21,11 +21,13 @@
       <i class="fa-solid fa-user"></i
       ><a [routerLink]="['/dashboard']">Inicio</a>
     </div>
+    <div class="item">
+      <i class="fa-solid fa-user"></i
+      ><a [routerLink]="['/notas']">Pacientes</a>
+    </div>
     <div class="item"><a [routerLink]="['/perfil']">Perfil</a></div>
     <div class="item"><a [routerLink]="['/ejercicios']">Ejercicios</a></div>
-    <div class="item">
-      <a [routerLink]="['/notas']">Notas de Doctor</a>
-    </div>
+
     <div *ngIf="role === 'admin'" class="item">
       <a [routerLink]="['/admin']">Admin</a>
     </div>
