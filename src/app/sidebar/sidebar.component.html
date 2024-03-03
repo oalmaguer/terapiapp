@@ -1,4 +1,4 @@
-<div class="container">
+<div class="main-container">
   <div class="image">
     <div class="image-box">
       <img
@@ -10,7 +10,7 @@
     </div>
     <div class="image-info">
       <span class="fa-solid fa-user"></span>
-      <h2>Oliver Almaguer</h2>
+      <h2>{{user.name}}</h2>
       <button [routerLink]="['/perfil']">
         <span class="text">Ver Perfil</span>
       </button>
@@ -25,7 +25,7 @@
     <div class="item">
       <i class="gg-notes"> </i
       ><a [routerLink]="['/notas']">{{
-        role === "admin" ? "Pacientes" : "Notas"
+        role === "admin" || role === "doctor" ? "Pacientes" : "Notas de Doctor"
       }}</a>
     </div>
     <div class="item">
@@ -48,7 +48,11 @@
     </div>
 
     <div class="item">
-      <i class="gg-close"> </i>
+      <img
+      style="width: 32px"
+      src="../../assets/svg/exit.png"
+      alt="logo"
+    />
       <a class="btn" (click)="logOut()">Cerrar Sesión</a>
     </div>
   </div>
