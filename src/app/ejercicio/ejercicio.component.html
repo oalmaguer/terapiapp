@@ -1,15 +1,10 @@
-<div class="videos" *ngIf="hasVideos">
+<div class="videos" *ngIf="true">
   <div class="video" *ngFor="let video of videos; let i = index">
-    <iframe
-      width="350"
-      height="200"
-      [src]="getSafeUrl(video.name)"
-      allowfullscreen
-    ></iframe>
+    <iframe [src]="getSafeUrl(video.name)" allowfullscreen></iframe>
     <div class="video-info">
       <div class="text">{{ video.name }}</div>
-      <div class="form-group" *ngIf="patients">
-        <form [formGroup]="adminForm">
+      <div class="form-group" *ngIf="userRole !== 'patient'">
+        <form [formGroup]="userForm">
           <h1>Selecciona un paciente para asignarle este video</h1>
           <select
             class="select-patients"
@@ -20,10 +15,66 @@
               {{ patient.name }}
             </option>
           </select>
+
+          <form [formGroup]="ejercicioForm">
+            <div class="ejercicios-info" *ngIf="true">
+              <div class="repe">
+                <label for="repeticiones">Repeticiones</label>
+                <select
+                  name="repeticiones"
+                  class="select-patients"
+                  formControlName="repeticiones"
+                >
+                  <option *ngFor="let number of numbers" [value]="number">
+                    {{ number }}
+                  </option>
+                </select>
+                <!-- <img
+                  class="icon"
+                  src="../../assets/images/ejercicios.png"
+                  alt=""
+                /> -->
+                <!-- <input
+                  placeholder="Repeticiones"
+                  type="number"
+                  formControlName="repeticiones"
+                /> -->
+              </div>
+              <div class="series">
+                <label for="series">Series</label>
+
+                <select
+                  name="series"
+                  class="select-patients"
+                  formControlName="series"
+                >
+                  <option *ngFor="let number of numbers" [value]="number">
+                    {{ number }}
+                  </option>
+                </select>
+                <!-- <img class="icon" src="../../assets/images/series.png" alt="" /> -->
+                <!-- <input
+                  placeholder="Series"
+                  type="number"
+                  formControlName="series"
+                /> -->
+              </div>
+            </div>
+            <div class="comentarios">
+              <label for="comentarios">Comentarios</label>
+              <textarea
+                name="comentarios"
+                class="select-patients"
+                formControlName="comentarios"
+              ></textarea>
+            </div>
+          </form>
+
           <button
             *ngIf="selectedPatient && video.id == selectedVideoId"
             class="btn"
-            (click)="assignVideo(video.id, adminForm.value.patient)"
+            (click)="assignVideo(video.id, userForm.value.patient)"
+            [disabled]="!selectedPatient"
           >
             Asignar
           </button>

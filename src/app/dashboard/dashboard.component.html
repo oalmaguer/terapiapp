@@ -1,18 +1,32 @@
 <div class="container">
   <div class="content">
     <h1>
-      Bienvenido: <span class="text"> {{ user?.name }}</span>
+      Hola,
+      <span>
+        {{ user?.name }}! <span style="font-size: 50px">&#9996;</span></span
+      >
     </h1>
 
-    <div class="card">
-      <div class="background">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-          perferendis quam omnis iusto veniam debitis vero? Accusantium
-          excepturi repellendus officiis illo? Vitae maxime mollitia iusto
-          labore iste perferendis, tempora facere.
-        </p>
-        <button>Ver mis ejercicios</button>
+    <div class="card-container">
+      <div class="card" [routerLink]="['/notas']">
+        <div class="background">
+          <img src="../../assets/svg/pediatra.svg" alt="" />
+
+          <p class="option-text">Ver pacientes</p>
+        </div>
+      </div>
+      <div class="card" [routerLink]="['/ejercicios']">
+        <div class="background">
+          <img class="img" src="../../assets/svg/carlos.svg" alt="" />
+          <p class="option-text">Ver Ejercicios</p>
+        </div>
+      </div>
+      <div class="card" [routerLink]="['/admin']">
+        <div class="background">
+          <img class="img" src="../../assets/svg/video.svg" alt="" />
+
+          <p class="option-text">Agregar video</p>
+        </div>
       </div>
     </div>
   </div>

@@ -43,9 +43,7 @@ export class RegisterComponent {
         this.update();
         this.router.navigate(['dashboard']);
       })
-      .catch((err) => {
-        console.log('Error: ', err);
-      });
+      .catch((err) => {});
     // this.usersService
     //   .register(
     //     this.auth,
@@ -53,18 +51,16 @@ export class RegisterComponent {
     //     this.userForm.value.password
     //   )
     //   .then((success) => {
-    //     console.log(success);
+    //
     //     this.setProfile();
     //   })
     //   .catch((error) => {
-    //     console.log(error);
+    //
     //   });
   }
 
   update() {
-    this.supabaseService.update(this.userForm.value).then((elem) => {
-      console.log('UPdate: ', elem);
-    });
+    this.supabaseService.update(this.userForm.value).then((elem) => {});
   }
   setProfile() {
     // let userData: UserProfileData = {

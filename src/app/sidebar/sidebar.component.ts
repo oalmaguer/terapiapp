@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 import { Subscription, filter } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,25 +15,55 @@ export class SidebarComponent {
   userRole: string | null = 'null';
   private subscription: Subscription = new Subscription();
   @Input() role: string | null = 'null';
+  user: any;
+  userImage: any;
+  imageUrl: any;
+  userForm: FormGroup = new FormGroup({});
 
   constructor(
     public afAuth: AngularFireAuth,
     private router: Router,
     private usersService: UsersService,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    // console.log(this.supabaseService.userRole);
+    //
     // this.supabaseService.userSupabaseData$.subscribe((elem) => {
     //   if (elem) {
-    //     console.log(elem.role);
+    //
     //     this.userRole = elem;
     //     const data = this.supabaseService.userInformation(elem);
-    //     console.log
+    //
     //   }
     // });
-    console.log(this.role);
+    this.supabaseService.userSupabaseData$.subscribe((elem) => {
+      if (elem) {
+        this.user = elem;
+        this.userRole = elem.role;
+
+        this.getUserImage(this.user);
+      }
+    });
+  }
+
+  async getUserImage(user) {
+    const { data, error } = await this.supabaseService
+      .getStorage()
+      .from('avatars2')
+      .list(this.user.id + '/');
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    this.imageUrl = `https://nllsuanpxktsdayzwsgl.supabase.co/storage/v1/object/public/avatars2/${user.id}/${data[0].name}`;
+    this.userForm.patchValue({
+      imageUrl: this.imageUrl,
+    });
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

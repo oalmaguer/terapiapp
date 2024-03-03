@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="userRole !== 'customer'" class="form">
+  <div *ngIf="userRole !== 'patient'" class="form">
     <h1>Selecciona un paciente</h1>
     <form [formGroup]="adminForm">
       <div class="form-group" *ngIf="patients">
@@ -33,7 +33,10 @@
       </ng-container>
     </form>
   </div>
-  <div class="notes" *ngIf="patientNotes && patientNotes.length > 0; else noNotes">
+  <div
+    class="notes"
+    *ngIf="patientNotes && patientNotes.length > 0; else noNotes"
+  >
     <h1>Notas anteriores</h1>
     <div *ngFor="let nota of patientNotes" class="note">
       <h3>Nota</h3>
@@ -45,7 +48,11 @@
   </div>
 
   <ng-template #noNotes>
-    <div *ngIf="selectedPatient" class="notes" [ngClass]="{ 'no-notes': patientNotes.length < 1 }">
+    <div
+      *ngIf="selectedPatient"
+      class="notes"
+      [ngClass]="{ 'no-notes': patientNotes.length < 1 }"
+    >
       <h1>No hay notas</h1>
     </div>
   </ng-template>

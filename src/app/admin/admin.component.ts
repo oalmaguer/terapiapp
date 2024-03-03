@@ -26,9 +26,7 @@ export class AdminComponent {
     });
   }
 
-  onSubmit() {
-    console.log(this.adminForm.value);
-  }
+  onSubmit() {}
 
   async onVideoSelected(event) {
     this.imageFile = event.target.files[0];

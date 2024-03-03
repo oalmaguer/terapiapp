@@ -15,45 +15,58 @@ export class EjercicioComponent {
   patients = [];
   selectedPatient: any;
   destroy$ = new Subject<boolean>();
-  adminForm: FormGroup = new FormGroup({});
+  userForm: FormGroup = new FormGroup({});
+  ejercicioForm: FormGroup = new FormGroup({});
   doctorId: any;
   hasVideos = false;
   selectedVideoId: any;
   public userVideos: any;
+  numbers: number[] = Array.from({ length: 25 }, (value, key) => key + 1);
 
+  userRole: string | null = 'null';
   constructor(
     private supabaseService: SupabaseService,
     private sanitizer: DomSanitizer,
     private cd: ChangeDetectorRef
   ) {}
   ngOnInit() {
-    this.adminForm = new FormGroup({
+    this.userForm = new FormGroup({
       patient: new FormControl([], [Validators.required]),
+    });
+
+    this.ejercicioForm = new FormGroup({
+      series: new FormControl('', [Validators.required]),
+      repeticiones: new FormControl('', [Validators.required]),
+      comentarios: new FormControl(''),
+    });
+    this.ejercicioForm.valueChanges.subscribe((elem) => {
+      console.log(elem);
+      console.log(this.ejercicioForm.valid);
     });
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       this.user = elem;
-      console.log(this.user);
-      this.getUserVideos(this.user.video);
+      if (this.user) {
+        this.getUserVideos(this.user.video);
+      }
     });
     this.getPatients();
     this.onChanges();
   }
 
-  async getUserVideos(videoId) {
-    console.log(videoId);
-    let userHasVideos = videoId;
+  async getUserVideos(videos) {
+    let userHasVideos = videos;
+
     if (!this.user) return;
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('videos')
       .list();
 
-    console.log(this.user);
     if (error) {
       console.error(error);
       return;
     }
-    console.log(data);
+
     let removeEmpty = data.filter(
       (elem) => elem.name !== '.emptyFolderPlaceholder'
     );
@@ -64,23 +77,39 @@ export class EjercicioComponent {
         id: elem.name.split('.')[0],
       };
     });
-    console.log(new_array);
     let newvideos = new_array.filter((elem) => {
       return userHasVideos.includes(parseInt(elem.id));
     });
-    this.videos = newvideos;
-    console.log(this.videos);
-    this.hasVideos = this.videos.length > 0;
+
+    if (videos.length == 1 && videos[0] === 1000) {
+      this.videos = new_array;
+    } else {
+      this.videos = newvideos;
+
+      this.hasVideos = this.videos.length > 0;
+    }
     this.cd.detectChanges();
   }
 
   onChanges() {
-    this.adminForm.get('patient')?.valueChanges.subscribe((id) => {
+    this.userForm.get('patient')?.valueChanges.subscribe((id) => {
       this.selectedPatient = this.patients.find((elem) => elem.id == id);
-      console.log(this.selectedPatient);
       this.userVideos = this.selectedPatient.video;
-      console.log(this.userVideos);
+    });
+
+    this.ejercicioForm.get('repeticiones')?.valueChanges.subscribe((id) => {
+      console.log(id);
+
       this.cd.detectChanges();
+    });
+
+    this.ejercicioForm.get('series')?.valueChanges.subscribe((id) => {
+      console.log(id);
+      this.cd.detectChanges();
+    });
+
+    this.ejercicioForm.get('comentarios')?.valueChanges.subscribe((id) => {
+      console.log(id);
     });
   }
 
@@ -89,8 +118,6 @@ export class EjercicioComponent {
 
     this.selectedVideoId = id;
     this.cd.detectChanges();
-    console.log(id);
-    console.log(event);
   }
 
   getPatients() {
@@ -99,11 +126,11 @@ export class EjercicioComponent {
         .pipe(takeUntil(this.destroy$))
         .subscribe((elem) => {
           if (elem) {
+            this.userRole = elem.role;
             this.doctorId = elem.doctor;
             this.patients = data.data.filter(
               (elem) => elem.doctor == this.doctorId
             );
-            console.log(this.patients);
           }
         });
     });
@@ -133,11 +160,18 @@ export class EjercicioComponent {
 
   async assignVideo(id, patient) {
     console.log(id, patient);
+    return;
     await this.supabaseService.assignVideo(
       this.userVideos,
       parseInt(this.selectedVideoId),
       this.selectedPatient.id
     );
     this.getPatients();
+  }
+
+  onEjercicioSelect(numero: number) {
+    this.userForm.patchValue({
+      patient: this.selectedPatient.id,
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from '../supabase.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -18,11 +18,13 @@ export class NotasComponent {
   patientNotes: any;
   userRole: string | null = 'null';
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.supabaseService.userSupabaseData$.subscribe((user) => {
-      console.log(user);
       if (user) {
         this.userRole = user.role;
         this.getNotes(user.id);
@@ -39,7 +41,6 @@ export class NotasComponent {
   onChanges() {
     this.adminForm.get('patient')?.valueChanges.subscribe((id) => {
       this.selectedPatient = this.patients.find((elem) => elem.id == id);
-      console.log(this.selectedPatient);
       this.getUserImage(this.selectedPatient);
     });
   }
@@ -54,14 +55,12 @@ export class NotasComponent {
             this.patients = data.data.filter(
               (elem) => elem.doctor == this.doctorId
             );
-            console.log(this.patients);
           }
         });
     });
   }
 
   async getUserImage(user) {
-    console.log(user);
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('avatars2')
@@ -81,20 +80,18 @@ export class NotasComponent {
     this.supabaseService
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
-        console.log(data);
         if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;
+          this.cd.detectChanges();
         }
       });
   }
 
   onSubmit() {
-    console.log(this.selectedPatient.id);
     this.supabaseService
       .writeNote(this.selectedPatient.id, this.adminForm.get('note')?.value)
       .then((data) => {
-        console.log(data);
         // if (data.data.length > 0) {
         //   this.supabaseService
         //     .updateNote({
@@ -102,7 +99,7 @@ export class NotasComponent {
         //       note: this.adminForm.get('note')?.value,
         //     })
         //     .then((elem) => {
-        //       console.log(elem);
+        //
         //     });
         // } else {
         //   this.supabaseService
@@ -111,7 +108,7 @@ export class NotasComponent {
         //       patient: this.selectedPatient.id,
         //     })
         //     .then((elem) => {
-        //       console.log(elem);
+        //
         //     });
         // }
       });

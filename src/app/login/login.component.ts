@@ -40,9 +40,7 @@ export class LoginComponent {
         }
         this.router.navigate(['/dashboard']); // Replace 123 with the actual parameter value
       })
-      .catch((err) => {
-        console.log('Error: ', err);
-      });
+      .catch((err) => {});
   }
 
   register() {
@@ -52,15 +50,9 @@ export class LoginComponent {
         this.userForm.value.username,
         this.userForm.value.password
       )
-      .then((success) => {
-        console.log(success);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((success) => {})
+      .catch((error) => {});
   }
 
-  onSubmit() {
-    console.log(this.userForm.value);
-  }
+  onSubmit() {}
 }

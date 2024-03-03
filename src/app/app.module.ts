@@ -23,6 +23,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SupabaseService } from './supabase.service';
 import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
 import { NotasComponent } from './notas/notas.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { NotasComponent } from './notas/notas.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    CommonModule,
   ],
   providers: [
     SupabaseService,

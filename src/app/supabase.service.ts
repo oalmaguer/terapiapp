@@ -19,7 +19,6 @@ export class SupabaseService {
 
     const { data } = this.supa_client.auth.onAuthStateChange(
       (event, session) => {
-        console.log(event, session);
         if (event === 'SIGNED_IN') {
           this.userData$.next(session.user);
           const data = this.userInformation(session.user);
@@ -47,7 +46,6 @@ export class SupabaseService {
       }
       return data;
     } catch (err) {
-      console.log('erro: ', err);
       return err.toPromise();
     }
   }
@@ -65,9 +63,8 @@ export class SupabaseService {
   }
 
   insertProfile(user) {
-    console.log(user);
     return this.supa_client
-      .from('users')
+      .from('patients')
       .insert({
         name: user.username,
         phone: user.phone,
@@ -78,7 +75,7 @@ export class SupabaseService {
 
   update(user) {
     return this.supa_client
-      .from('users')
+      .from('patients')
       .update({
         email: user.email,
         phone: user.cellphone,
@@ -89,7 +86,6 @@ export class SupabaseService {
   }
 
   updateDocInfo(user) {
-    console.log(user);
     return this.supa_client
       .from('doctors')
       .insert({
@@ -98,19 +94,17 @@ export class SupabaseService {
         name: user.name,
         skill: user.skill,
       })
-      .then((response) => {
-        console.log(response);
-      });
+      .then((response) => {});
   }
 
   async userInformation(user) {
     return await this.supa_client
-      .from('users')
+      .from('patients')
       .select('*')
       .eq('email', user.email);
   }
   async getPatients() {
-    return await this.supa_client.from('users').select('*');
+    return await this.supa_client.from('patients').select('*');
   }
 
   getSession() {
@@ -152,11 +146,9 @@ export class SupabaseService {
     }
 
     let rmDup = new Set(videos.map((elem) => parseInt(elem)));
-    console.log(userVideos, videoId, patiendId);
-    console.log(rmDup);
 
     return await this.supa_client
-      .from('users')
+      .from('patients')
       .update([{ video: Array.from(rmDup) }])
       .eq('id', patiendId);
   }

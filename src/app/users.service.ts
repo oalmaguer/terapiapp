@@ -64,7 +64,7 @@ export class UsersService {
 
   async getUserProfile(user) {
     let data = [];
-    const querySnapshot = await getDocs(collection(this.firestore, 'users'));
+    const querySnapshot = await getDocs(collection(this.firestore, 'patients'));
     querySnapshot.forEach((doc) => {
       doc.data();
       // doc.data() is never undefined for query doc snapshots
