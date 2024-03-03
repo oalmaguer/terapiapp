@@ -79,3 +79,13 @@ iframe {
   box-sizing: border-box; /* Optional: include padding and border in the width */
   height: 300px;
 }
+
+.patient-info {
+  display: flex;
+  gap: 1rem;
+  color: black;
+}
+
+.patient-info span {
+  font-weight: 600;
+}

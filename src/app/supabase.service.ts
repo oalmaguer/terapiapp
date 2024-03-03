@@ -97,6 +97,13 @@ export class SupabaseService {
       .then((response) => {});
   }
 
+  obtenerAsignacionesPaciente(pacienteId = 14) {
+    return this.supa_client
+      .from('asignaciones')
+      .select('*')
+      .eq('paciente_id', pacienteId);
+  }
+
   async userInformation(user) {
     return await this.supa_client
       .from('patients')
@@ -137,7 +144,14 @@ export class SupabaseService {
     return await this.supa_client.from('notes').select('*').eq('id', userId);
   }
 
-  async assignVideo(userVideos, videoId, patiendId) {
+  async assignVideo(
+    userVideos,
+    videoId,
+    patiendId,
+    series,
+    repeticiones,
+    comentario
+  ) {
     let videos = [];
     if (!userVideos) {
       videos = [videoId];
@@ -147,6 +161,13 @@ export class SupabaseService {
 
     let rmDup = new Set(videos.map((elem) => parseInt(elem)));
 
+    await this.supa_client.from('asignaciones').insert({
+      paciente_id: patiendId,
+      video_id: videoId,
+      series: series,
+      repeticiones: repeticiones,
+      comentario: comentario,
+    });
     return await this.supa_client
       .from('patients')
       .update([{ video: Array.from(rmDup) }])

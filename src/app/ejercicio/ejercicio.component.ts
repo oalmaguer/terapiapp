@@ -39,10 +39,7 @@ export class EjercicioComponent {
       repeticiones: new FormControl('', [Validators.required]),
       comentarios: new FormControl(''),
     });
-    this.ejercicioForm.valueChanges.subscribe((elem) => {
-      console.log(elem);
-      console.log(this.ejercicioForm.valid);
-    });
+    this.ejercicioForm.valueChanges.subscribe((elem) => {});
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       this.user = elem;
       if (this.user) {
@@ -88,7 +85,28 @@ export class EjercicioComponent {
 
       this.hasVideos = this.videos.length > 0;
     }
+    console.log('Videos: ', this.videos);
+    this.addExerciseInfo();
+    console.log(this.videos);
+
     this.cd.detectChanges();
+  }
+
+  addExerciseInfo() {
+    this.supabaseService.obtenerAsignacionesPaciente().then((data) => {
+      let asignaciones = data.data;
+      asignaciones.forEach((asignacion) => {
+        this.videos = this.videos.map((video) => {
+          if (video.id == asignacion.video_id) {
+            video.repeticiones = asignacion.repeticiones;
+            video.series = asignacion.series;
+            video.comentario = asignacion.comentario;
+            video.fecha = asignacion.created_at;
+          }
+          return video;
+        });
+      });
+    });
   }
 
   onChanges() {
@@ -98,19 +116,14 @@ export class EjercicioComponent {
     });
 
     this.ejercicioForm.get('repeticiones')?.valueChanges.subscribe((id) => {
-      console.log(id);
-
       this.cd.detectChanges();
     });
 
     this.ejercicioForm.get('series')?.valueChanges.subscribe((id) => {
-      console.log(id);
       this.cd.detectChanges();
     });
 
-    this.ejercicioForm.get('comentarios')?.valueChanges.subscribe((id) => {
-      console.log(id);
-    });
+    this.ejercicioForm.get('comentarios')?.valueChanges.subscribe((id) => {});
   }
 
   onPatientSelect(id, event) {
@@ -159,12 +172,13 @@ export class EjercicioComponent {
   }
 
   async assignVideo(id, patient) {
-    console.log(id, patient);
-    return;
     await this.supabaseService.assignVideo(
       this.userVideos,
       parseInt(this.selectedVideoId),
-      this.selectedPatient.id
+      this.selectedPatient.id,
+      this.ejercicioForm.value.series,
+      this.ejercicioForm.value.repeticiones,
+      this.ejercicioForm.value.comentarios
     );
     this.getPatients();
   }
