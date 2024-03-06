@@ -1,9 +1,7 @@
 import { Component, NgZone, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../users.service';
-import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SupabaseService } from '../supabase.service';
 
 @Component({
@@ -12,14 +10,12 @@ import { SupabaseService } from '../supabase.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  private auth: Auth = inject(Auth);
 
   userForm: FormGroup;
   errorMessage: string;
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
-    public afAuth: AngularFireAuth,
     private router: Router,
     private supabaseService: SupabaseService
   ) {}
@@ -43,16 +39,7 @@ export class LoginComponent {
       .catch((err) => {});
   }
 
-  register() {
-    this.usersService
-      .register(
-        this.auth,
-        this.userForm.value.username,
-        this.userForm.value.password
-      )
-      .then((success) => {})
-      .catch((error) => {});
-  }
+
 
   onSubmit() {}
 }

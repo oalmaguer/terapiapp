@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../users.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { first } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 
@@ -19,7 +17,6 @@ export class DashboardComponent {
   userRole: string;
   constructor(
     private usersService: UsersService,
-    public afAuth: AngularFireAuth,
     private router: Router,
     private route: ActivatedRoute,
     private supabaseService: SupabaseService

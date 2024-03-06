@@ -1,9 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { UsersService } from '../users.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import UserProfileData from '../dto/user.interface';
-import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 
@@ -14,10 +12,8 @@ import { SupabaseService } from '../supabase.service';
 })
 export class RegisterComponent {
   userForm: FormGroup;
-  private auth: Auth = inject(Auth);
   constructor(
     private usersService: UsersService,
-    public afAuth: AngularFireAuth,
     private formBuilder: FormBuilder,
     private router: Router,
     private supabaseService: SupabaseService

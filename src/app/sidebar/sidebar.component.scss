@@ -1,22 +1,22 @@
 .main-container {
-width: 320px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  font-size: 1rem;
-  font-weight: 600;
-  font-size: 1.5rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  text-align: center;
-// margin: 0;
-//   padding: 0;
-//   width: 300px;
-//   background-color: #f1f1f1;
-//   position: fixed;
-//   height: 100%;
-//   overflow: auto;
+// width: 320px;
 //   display: flex;
 //   flex-direction: column;
+//   min-height: 100%;
+//   font-size: 1rem;
+//   font-weight: 600;
+//   font-size: 1.5rem;
+//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+//   text-align: center;
+margin: 0;
+  padding: 0;
+  width: 300px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn {
@@ -50,7 +50,8 @@ width: 320px;
   flex-direction: column;
   gap: 2rem;
   margin-left: 1.8rem;
-  font-size: 1.4rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }
 
 .text {
@@ -90,4 +91,8 @@ width: 320px;
 }
 .text:hover {
   color: #92e3a9;
+}
+
+.sidebar-image {
+  width: 50%;
 }

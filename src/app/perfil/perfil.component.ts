@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { UsersService } from '../users.service';
-import { doc } from '@angular/fire/firestore';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -26,6 +25,7 @@ export class PerfilComponent {
   userDoctor = '';
   newImage: any;
   userRole;
+  imageName: string;
 
   ngOnInit() {
     this.userForm = new FormGroup({
@@ -68,11 +68,14 @@ export class PerfilComponent {
     });
   }
   async uploadImage() {
+
+      const image = await this.supabaseService.removeImage(this.user.id, this.imageName);
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('avatars2')
       .upload(`${this.user.id}/avatar_${Date.now()}.png`, this.imageFile);
 
+      console.log(data);
     if (error) {
       console.error(error);
       return;
@@ -82,18 +85,23 @@ export class PerfilComponent {
       this.successMessage = false;
     }, 3000);
     // this.imageUrl.value = URL.createObjectURL(this.imageFile);
+    this.usersService.imageChangeTrigger();
   }
 
   async getUserImage(user) {
     const { data, error } = await this.supabaseService
-      .getStorage()
-      .from('avatars2')
-      .list(this.user.id + '/');
+    .getStorage()
+    .from('avatars2')
+    .list(this.user.id + '/');
 
+    console.log(data)
     if (error) {
       console.error(error);
       return;
+
     }
+
+    this.imageName = data[0].name;
 
     this.imageUrl = `https://nllsuanpxktsdayzwsgl.supabase.co/storage/v1/object/public/avatars2/${user.id}/${data[0].name}`;
     this.userForm.patchValue({

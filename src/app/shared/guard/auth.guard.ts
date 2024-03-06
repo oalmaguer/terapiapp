@@ -7,8 +7,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, first, map, take, tap } from 'rxjs';
-import { Auth, authState } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UsersService } from 'src/app/users.service';
 import { SupabaseService } from 'src/app/supabase.service';
 
@@ -18,7 +16,6 @@ import { SupabaseService } from 'src/app/supabase.service';
 export class AuthGuard implements CanActivate {
   constructor(
     public router: Router,
-    public afAuth: AngularFireAuth,
     private usersService: UsersService,
     private supabaseService: SupabaseService
   ) {}

@@ -122,6 +122,14 @@ export class SupabaseService {
     return this.supa_client.storage;
   }
 
+  async removeImage(userId, imageName) {
+        //remove image first
+    return  await this.supa_client
+  .storage
+  .from('avatars2')
+  .remove([`${userId}/${imageName}`])
+  }
+
   getSupabaseClient() {
     return this.supa_client;
   }

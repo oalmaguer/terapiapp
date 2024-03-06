@@ -54,7 +54,7 @@
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   font-size: 1.2rem;
   font-weight: 400;
-  width: 338px;
+  width: 250px;
   border-radius: 35px;
 }
 
@@ -76,6 +76,7 @@
 
 .card-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 2.5rem;
 }
 

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
@@ -21,7 +20,6 @@ export class SidebarComponent {
   userForm: FormGroup = new FormGroup({});
 
   constructor(
-    public afAuth: AngularFireAuth,
     private router: Router,
     private usersService: UsersService,
     private supabaseService: SupabaseService,
@@ -29,15 +27,6 @@ export class SidebarComponent {
   ) {}
 
   ngOnInit() {
-    //
-    // this.supabaseService.userSupabaseData$.subscribe((elem) => {
-    //   if (elem) {
-    //
-    //     this.userRole = elem;
-    //     const data = this.supabaseService.userInformation(elem);
-    //
-    //   }
-    // });
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
@@ -45,6 +34,12 @@ export class SidebarComponent {
 
         this.getUserImage(this.user);
       }
+    });
+  }
+
+  imageChanges() {
+    this.usersService.imageChanged$.subscribe((elem) => {
+      this.getUserImage(this.user);
     });
   }
 

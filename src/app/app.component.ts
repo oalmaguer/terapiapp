@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
 import { SupabaseService } from './supabase.service';
@@ -15,7 +14,6 @@ export class AppComponent {
   isLoading = true;
 
   constructor(
-    public auth: AngularFireAuth,
     private router: Router,
     private usersService: UsersService,
     private supabaseService: SupabaseService
