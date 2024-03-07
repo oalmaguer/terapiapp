@@ -107,7 +107,6 @@ export class PerfilComponent {
     this.userForm.patchValue({
       imageUrl: this.imageUrl,
     });
-    this.cd.detectChanges();
   }
 
   async onImageSelected(event) {

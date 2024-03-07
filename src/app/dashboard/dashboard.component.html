@@ -1,30 +1,30 @@
 <div class="container">
   <div class="content">
-    <h1>
+    <h2>
       Hola,
       <span>
         {{ user?.name }}! <span style="font-size: 50px">&#9996;</span></span
       >
-    </h1>
+    </h2>
 
     <div class="card-container">
       <div class="card" [routerLink]="['/notas']">
         <div class="background">
           <img style="height: 300px;" src="../../assets/svg/pediatra.svg" alt="" />
-          <p class="option-text">Ver pacientes</p>
+          <p class="option-text">{{ userRole === "admin" ? "Ver Pacientes" : "Ver mis notas" }}</p>
         </div>
       </div>
       <div class="card" [routerLink]="['/ejercicios']">
         <div class="background">
           <img class="img" src="../../assets/svg/carlos.svg" alt="" />
-          <p class="option-text">Ver Ejercicios</p>
+          <p class="option-text">{{ userRole === "admin" ? "Asignar Ejercicios" : "Ver mis ejercicios" }}</p>
         </div>
       </div>
-      <div class="card" [routerLink]="['/admin']">
+      <div class="card" [routerLink]="[userRole === 'admin' ? '/admin' : '/perfil']">
         <div class="background">
           <img class="img" src="../../assets/svg/video.svg" alt="" />
 
-          <p class="option-text">Agregar video</p>
+          <p class="option-text">{{ userRole === "admin" ? "Agregar nuevo video" : "Ver mi perfil" }}</p>
         </div>
       </div>
     </div>

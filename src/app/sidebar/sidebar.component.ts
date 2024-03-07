@@ -27,6 +27,7 @@ export class SidebarComponent {
   ) {}
 
   ngOnInit() {
+    this.imageChanges();
     this.supabaseService.userSupabaseData$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
@@ -58,7 +59,6 @@ export class SidebarComponent {
     this.userForm.patchValue({
       imageUrl: this.imageUrl,
     });
-    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

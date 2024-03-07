@@ -22,12 +22,14 @@
 }
 
 .image img {
-  max-width: 250px;
+  width: 250px;
+  height: 250px;
   border: 1px solid rgb(83, 83, 83);
   transition: opacity 0.2s ease-in-out;
   box-shadow: 1px 1px 5px 1px #d3d3d3;
   opacity: 1;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .image img:hover {
@@ -42,6 +44,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.items {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .form-group label {
@@ -78,12 +86,16 @@ button {
   flex-direction: column;
   background-color: whitesmoke;
   max-width: 50vw;
-  padding: 1rem;
+  padding: 2rem;
   margin-top: 2rem;
-  border-radius: 0px 15px 15px 15px;
+  border-radius: 15px 15px 15px 15px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid #e5e5e5;
+  height: 100%;
+}
+.card-body {
+  height: 100%;
 }
 .footer {
   display: flex;

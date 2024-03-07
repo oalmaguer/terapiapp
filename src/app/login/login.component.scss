@@ -9,7 +9,7 @@
 }
 
 .btn {
-  padding: 0.3rem;
+  padding: 0.8rem;
   border: 1px solid B4D4FF;
   border-radius: 4px;
   margin-top: 1rem;
@@ -36,7 +36,7 @@
 
 .form-container input {
   padding-inline: 1rem;
-  padding-block: 0.3rem;
+  padding-block: 0.8rem;
   border: 1px solid #d3d3d3;
   border-radius: 4px;
   background-color: #e1f0da;
@@ -44,6 +44,8 @@
 
 .links {
   text-align: center;
+  text-decoration: none;
+  color: black;
 }
 
 .links:hover {

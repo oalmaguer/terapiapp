@@ -31,42 +31,52 @@
                 Tu doctor es: <span>{{ userDoctor }}</span>
               </p>
             </div>
-            <label for="name">Nombre</label>
-            <p *ngIf="!editMode">{{ user?.name }}</p>
-            <input
+
+            <div class="items">
+
+            <div class="item">
+              <label for="name">Nombre</label>
+              <p *ngIf="!editMode">{{ user?.name }}</p>
+              <input
               *ngIf="editMode"
               type="name"
               formControlName="name"
               placeholder="Nombre"
-            />
+              />
 
-            <label for="email">Email</label>
-            <p *ngIf="!editMode">{{ user?.email }}</p>
+
+              <label for="email">Email</label>
+              <p *ngIf="!editMode">{{ user?.email }}</p>
             <input
-              *ngIf="editMode"
-              type="email"
-              formControlName="email"
-              placeholder="Email"
+            *ngIf="editMode"
+            type="email"
+            formControlName="email"
+            placeholder="Email"
             />
-
+          </div>
+          <div class="item">
             <label for="phone">Telefono</label>
             <p *ngIf="!editMode">{{ user?.phone }}</p>
             <input
-              *ngIf="editMode"
-              type="phone"
-              formControlName="phone"
-              placeholder="Telefono"
+            *ngIf="editMode"
+            type="phone"
+            formControlName="phone"
+            placeholder="Telefono"
             />
+
 
             <label *ngIf="userRole === 'patient'" for="skill">Lesión</label>
             <p *ngIf="userRole === 'patient'">{{ user?.lesion }}</p>
             <input
-              *ngIf="editMode"
-              type="lesion"
+            *ngIf="editMode"
+            type="lesion"
               formControlName="lesion"
               placeholder="Lesion"
-            />
+              />
+            </div>
           </div>
+        </div>
+
         </div>
       </form>
     </div>

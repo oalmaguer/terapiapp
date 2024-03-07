@@ -17,7 +17,7 @@ export class NotasComponent {
   destroy$ = new Subject<boolean>();
   patientNotes: any;
   userRole: string | null = 'null';
-
+  user: any;
   constructor(
     private supabaseService: SupabaseService,
     private cd: ChangeDetectorRef
@@ -26,8 +26,8 @@ export class NotasComponent {
   ngOnInit() {
     this.supabaseService.userSupabaseData$.subscribe((user) => {
       if (user) {
+        this.user = user;
         this.userRole = user.role;
-        this.getNotes(user.id);
       }
     });
     this.adminForm = new FormGroup({
@@ -41,7 +41,12 @@ export class NotasComponent {
   onChanges() {
     this.adminForm.get('patient')?.valueChanges.subscribe((id) => {
       this.selectedPatient = this.patients.find((elem) => elem.id == id);
-      this.getUserImage(this.selectedPatient);
+      if (this.selectedPatient) {
+        console.log(this.user);
+        this.getNotes();
+        this.getUserImage(this.selectedPatient);
+
+      }
     });
   }
 
@@ -80,10 +85,10 @@ export class NotasComponent {
     this.supabaseService
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
+        console.log(data);
         if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;
-          this.cd.detectChanges();
         }
       });
   }
@@ -92,6 +97,10 @@ export class NotasComponent {
     this.supabaseService
       .writeNote(this.selectedPatient.id, this.adminForm.get('note')?.value)
       .then((data) => {
+        if (data) {
+
+          this.getNotes(this.selectedPatient.id);
+        }
         // if (data.data.length > 0) {
         //   this.supabaseService
         //     .updateNote({

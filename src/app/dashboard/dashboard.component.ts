@@ -31,6 +31,8 @@ export class DashboardComponent {
       this.supabaseService.userInformation(elem).then((user) => {
         // this.user = user.data[0];
         // this.getUserImage(this.user);
+        console.log(user)
+        this.userRole = user.data[0].role;
         this.user = user.data[0];
       });
     });

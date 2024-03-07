@@ -89,7 +89,6 @@ export class EjercicioComponent {
     this.addExerciseInfo();
     console.log(this.videos);
 
-    this.cd.detectChanges();
   }
 
   addExerciseInfo() {
@@ -116,11 +115,9 @@ export class EjercicioComponent {
     });
 
     this.ejercicioForm.get('repeticiones')?.valueChanges.subscribe((id) => {
-      this.cd.detectChanges();
     });
 
     this.ejercicioForm.get('series')?.valueChanges.subscribe((id) => {
-      this.cd.detectChanges();
     });
 
     this.ejercicioForm.get('comentarios')?.valueChanges.subscribe((id) => {});
@@ -130,7 +127,6 @@ export class EjercicioComponent {
     this.selectedPatient = this.patients.find((elem) => elem.id == event);
 
     this.selectedVideoId = id;
-    this.cd.detectChanges();
   }
 
   getPatients() {

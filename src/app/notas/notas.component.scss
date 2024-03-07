@@ -1,3 +1,7 @@
+
+:host {
+  width: 100%;
+}
 .container {
   padding: 2rem;
   display: flex;
@@ -85,7 +89,7 @@
 .note {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: .5rem;
   min-width: 250px;
   background-color: #e0f6e5;
   padding: 0.7rem;

@@ -42,6 +42,15 @@
               ],
               "outputHashing": "all"
             },
+            "dev": {
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+              },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -51,7 +60,7 @@
               "namedChunks": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -61,6 +70,9 @@
             },
             "development": {
               "browserTarget": "carlosapp:build:development"
+            },
+            "dev": {
+              "browserTarget": "carlosapp:build:dev"
             }
           },
           "defaultConfiguration": "development"
