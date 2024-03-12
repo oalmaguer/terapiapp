@@ -1,4 +1,12 @@
 <div class="main-container">
+  <div class="main-logo">
+    <img
+      style="width: 64px; filter: hue-rotate(85deg)"
+      src="../../assets/images/logo2.png"
+      alt="logo"
+    />
+    <h3 class="logo">Terapiapp</h3>
+  </div>
   <div class="image">
     <div class="image-box">
       <img
@@ -10,56 +18,64 @@
     </div>
     <div class="image-info">
       <span class="fa-solid fa-user"></span>
-      <h4>{{user?.name}}</h4>
-      <button [routerLink]="['/perfil']">
+      <h4>{{ user?.name }}</h4>
+      <button class="btn" [routerLink]="['/perfil']">
         <span class="text">Ver Perfil</span>
       </button>
     </div>
   </div>
 
   <div class="menus">
-    <div class="item">
-      <i class="gg-home"></i>
-      <a [routerLink]="['/dashboard']">Inicio</a>
+    <div class="item" [routerLink]="['/dashboard']">
+      <img style="width: 32px" src="../../assets/svg/home.svg" alt="logo" />
+      <a>Inicio</a>
     </div>
-    <div class="item">
-      <i class="gg-notes"> </i
-      ><a [routerLink]="['/notas']">{{
+    <div class="item" [routerLink]="['/notas']">
+      <img
+        style="width: 32px"
+        src="../../assets/svg/notes.svg"
+        alt="logo"
+      /><a>{{
         role === "admin" || role === "doctor" ? "Pacientes" : "Notas de Doctor"
       }}</a>
     </div>
-    <div class="item">
-      <i class="gg-profile"> </i>
+    <div class="item" [routerLink]="['/perfil']">
+      <img style="width: 32px" src="../../assets/svg/perfil.svg" alt="logo" />
       <a [routerLink]="['/perfil']">Perfil</a>
     </div>
-    <div class="item">
-      <img
-        style="width: 32px"
-        src="../../assets/images/exercise.png"
-        alt="logo"
-      />
-      <a [routerLink]="['/ejercicios']">Ejercicios</a>
+    <div class="item" [routerLink]="['/ejercicios']">
+      <img style="width: 32px" src="../../assets/svg/exercise.svg" alt="logo" />
+      <a>Ejercicios</a>
     </div>
 
-    <div *ngIf="role === 'admin'" class="item">
-      <i class="gg-camera"> </i>
+    <div *ngIf="role === 'admin'" [routerLink]="['/admin']" class="item">
+      <img style="width: 32px" src="../../assets/svg/video.svg" alt="logo" />
+      <a>Agregar video</a>
+    </div>
 
-      <a [routerLink]="['/admin']">Agregar video</a>
+    <div *ngIf="role === 'admin'" [routerLink]="['/citas']" class="item">
+      <img style="width: 32px" src="../../assets/svg/cita.svg" alt="logo" />
+      <a>Citas</a>
+    </div>
+
+    <div
+      *ngIf="role === 'patient'"
+      [routerLink]="['/citaPaciente']"
+      class="item"
+    >
+      <i class="gg-alarm"> </i>
+      <a>Ver mi cita</a>
     </div>
 
     <div class="item">
-      <img
-      style="width: 32px"
-      src="../../assets/svg/exit.png"
-      alt="logo"
-    />
+      <img style="width: 32px" src="../../assets/svg/exit.png" alt="logo" />
       <a class="btn" (click)="logOut()">Cerrar Sesión</a>
     </div>
   </div>
 
-  <div class="sidebar-image">
+  <!-- <div class="sidebar-image">
     <img src="../../assets/svg/Doctors-bro.svg" alt="" />
-  </div>
+  </div> -->
 
   <div class="copyright">
     <p>© 2024 Terapiapp</p>

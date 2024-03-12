@@ -16,14 +16,40 @@ export class AdminComponent {
   adminForm: FormGroup;
   user;
   imageFile: any;
+  showError: boolean = false;
 
   ngOnInit() {
     this.adminForm = new FormGroup({
-      videoName: new FormControl('', [Validators.required, Validators.email]),
+      videoName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      video: new FormControl('', [Validators.required]),
     });
-    this.supabaseService.userSupabaseData$.subscribe((elem) => {
+    this.supabaseService.patientData$.subscribe((elem) => {
       this.user = elem;
     });
+
+    this.adminForm.get('video').valueChanges.subscribe((elem) => {
+      if (elem) {
+        let name = elem.split('.')[1];
+        name !== 'mp4' ? this.resetVideo() : this.showName();
+      }
+    });
+  }
+
+  showName() {
+    this.adminForm.get('videoName').setValue(this.adminForm.get('video').value);
+    this.showError = false;
+  }
+
+  resetVideo() {
+    this.adminForm.get('video').setValue('');
+    this.imageFile = null;
+    this.showError = true;
+    setTimeout(() => {
+      this.showError = false;
+    }, 10000);
   }
 
   onSubmit() {}
@@ -51,5 +77,9 @@ export class AdminComponent {
     // setTimeout(() => {
     //   this.successMessage = false;
     // }, 3000);
+  }
+
+  openFileInput() {
+    document.getElementById('fileInput').click();
   }
 }

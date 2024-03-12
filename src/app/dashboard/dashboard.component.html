@@ -1,4 +1,14 @@
 <div class="container">
+  <p-dropdown
+    *ngIf="userRole === 'admin' || userRole === 'doctor'"
+    style="padding-top: 2rem"
+    [options]="patients"
+    placeholder="Busca un paciente para ver su perfil"
+    optionLabel="name"
+    [filter]="true"
+    optionValue="email"
+    (onChange)="onPatientSelect($event.value)"
+  ></p-dropdown>
   <div class="content">
     <h2>
       Hola,
@@ -10,21 +20,49 @@
     <div class="card-container">
       <div class="card" [routerLink]="['/notas']">
         <div class="background">
-          <img style="height: 300px;" src="../../assets/svg/pediatra.svg" alt="" />
-          <p class="option-text">{{ userRole === "admin" ? "Ver Pacientes" : "Ver mis notas" }}</p>
+          <img
+            style="height: 300px"
+            src="../../assets/svg/pediatra.svg"
+            alt=""
+          />
+          <p class="option-text">
+            {{ userRole === "admin" ? "Ver Pacientes" : "Ver mis notas" }}
+          </p>
         </div>
       </div>
       <div class="card" [routerLink]="['/ejercicios']">
         <div class="background">
           <img class="img" src="../../assets/svg/carlos.svg" alt="" />
-          <p class="option-text">{{ userRole === "admin" ? "Asignar Ejercicios" : "Ver mis ejercicios" }}</p>
+          <p class="option-text">
+            {{
+              userRole === "admin" ? "Asignar Ejercicios" : "Ver mis ejercicios"
+            }}
+          </p>
         </div>
       </div>
-      <div class="card" [routerLink]="[userRole === 'admin' ? '/admin' : '/perfil']">
+      <div
+        class="card"
+        [routerLink]="[userRole === 'admin' ? '/admin' : '/perfil']"
+      >
         <div class="background">
-          <img class="img" src="../../assets/svg/video.svg" alt="" />
+          <img class="img" src="../../assets/svg/videosvg.svg" alt="" />
 
-          <p class="option-text">{{ userRole === "admin" ? "Agregar nuevo video" : "Ver mi perfil" }}</p>
+          <p class="option-text">
+            {{ userRole === "admin" ? "Agregar nuevo video" : "Ver mi perfil" }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="userRole === 'admin'"
+        class="card"
+        [routerLink]="[userRole === 'admin' ? '/citas' : '/perfil']"
+      >
+        <div class="background">
+          <img class="img" src="../../assets/svg/citadash.svg" alt="" />
+          <p class="option-text">
+            {{ userRole === "admin" ? "Poner cita" : "Ver mi perfil" }}
+          </p>
         </div>
       </div>
     </div>

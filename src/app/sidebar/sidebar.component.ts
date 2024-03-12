@@ -28,7 +28,7 @@ export class SidebarComponent {
 
   ngOnInit() {
     this.imageChanges();
-    this.supabaseService.userSupabaseData$.subscribe((elem) => {
+    this.supabaseService.patientData$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
         this.userRole = elem.role;
@@ -70,7 +70,7 @@ export class SidebarComponent {
     // this.afAuth.signOut();
     this.router.navigate(['login']);
     this.supabaseService.userData$.next(null);
-    this.supabaseService.userSupabaseData$.next(null);
+    this.supabaseService.patientData$.next(null);
     this.supabaseService.signOut();
   }
 }

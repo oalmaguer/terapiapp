@@ -1,0 +1,7 @@
+<div class="cita-list">
+  <div class="cita" *ngFor="let cita of citas">
+    <h3>Fecha: {{ cita.fecha_inicio.split(" ")[0] }}</h3>
+    <h3>Hora: {{ cita.fecha_inicio.split(" ")[1] }}</h3>
+    <p>Comentarios: {{ cita.descripcion }}</p>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { SupabaseService } from '../supabase.service';
 import { UsersService } from '../users.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -13,8 +14,7 @@ export class PerfilComponent {
   editMode = false;
   constructor(
     private supabaseService: SupabaseService,
-    private usersService: UsersService,
-    private cd: ChangeDetectorRef
+    private usersService: UsersService
   ) {}
   userForm: FormGroup = new FormGroup({});
   user: any;
@@ -36,7 +36,7 @@ export class PerfilComponent {
       phone: new FormControl(),
       imageUrl: new FormControl(),
     });
-    this.supabaseService.userSupabaseData$.subscribe((elem) => {
+    this.supabaseService.patientData$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
         this.userRole = elem.role;
@@ -45,10 +45,6 @@ export class PerfilComponent {
         this.getUserDoctors(this.user.doctor);
       }
     });
-
-    // this.userForm.valueChanges.subscribe((elem) => {
-    //   this.newImage = true;
-    // });
   }
 
   getUserDoctors(doctorId) {
@@ -68,14 +64,15 @@ export class PerfilComponent {
     });
   }
   async uploadImage() {
-
-      const image = await this.supabaseService.removeImage(this.user.id, this.imageName);
+    const image = await this.supabaseService.removeImage(
+      this.user.id,
+      this.imageName
+    );
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('avatars2')
       .upload(`${this.user.id}/avatar_${Date.now()}.png`, this.imageFile);
 
-      console.log(data);
     if (error) {
       console.error(error);
       return;
@@ -90,15 +87,13 @@ export class PerfilComponent {
 
   async getUserImage(user) {
     const { data, error } = await this.supabaseService
-    .getStorage()
-    .from('avatars2')
-    .list(this.user.id + '/');
+      .getStorage()
+      .from('avatars2')
+      .list(this.user.id + '/');
 
-    console.log(data)
     if (error) {
       console.error(error);
       return;
-
     }
 
     this.imageName = data[0].name;

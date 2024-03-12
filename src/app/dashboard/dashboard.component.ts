@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,9 @@ export class DashboardComponent {
   imageFile: any;
   successMessage = false;
   userRole: string;
+  destroy$ = new Subject<boolean>();
+  doctorId: any;
+  patients: any[];
   constructor(
     private usersService: UsersService,
     private router: Router,
@@ -31,11 +35,11 @@ export class DashboardComponent {
       this.supabaseService.userInformation(elem).then((user) => {
         // this.user = user.data[0];
         // this.getUserImage(this.user);
-        console.log(user)
         this.userRole = user.data[0].role;
         this.user = user.data[0];
       });
     });
+    this.getPatients();
   }
 
   getUserData(userData) {
@@ -84,5 +88,24 @@ export class DashboardComponent {
     this.imageUrl = URL.createObjectURL(file);
 
     // showOverlay.value = true;
+  }
+
+  getPatients() {
+    this.supabaseService.getPatients().then((data) => {
+      this.supabaseService.patientData$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((elem) => {
+          if (elem) {
+            this.doctorId = elem.doctor;
+            this.patients = data.data.filter(
+              (elem) => elem.doctor == this.doctorId
+            );
+          }
+        });
+    });
+  }
+
+  onPatientSelect(patient) {
+    this.router.navigate(['/notas', { patient: patient }]);
   }
 }

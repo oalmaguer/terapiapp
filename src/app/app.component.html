@@ -1,6 +1,10 @@
-<div style="display: flex; height: 100%;" [ngClass]="{ 'center-login': !userLoggedIn }">
+<div
+  style="display: flex; min-height: 100vh"
+  [ngClass]="{ 'center-login': !userLoggedIn }"
+>
   <div class="sidebar" *ngIf="userLoggedIn" style="margin-right: 2rem">
     <app-sidebar *ngIf="userRole" [role]="userRole.role"></app-sidebar>
   </div>
+
   <router-outlet></router-outlet>
 </div>

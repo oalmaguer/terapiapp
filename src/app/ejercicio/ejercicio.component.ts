@@ -3,10 +3,23 @@ import { SupabaseService } from '../supabase.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-ejercicio',
   templateUrl: './ejercicio.component.html',
   styleUrls: ['./ejercicio.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ height: 0, opacity: 0 }),
+        animate('.2s ease-out', style({ height: 300, opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ height: 300, opacity: 1 }),
+        animate('.2s ease', style({ height: 0, opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class EjercicioComponent {
   user: any;
@@ -22,8 +35,11 @@ export class EjercicioComponent {
   selectedVideoId: any;
   public userVideos: any;
   numbers: number[] = Array.from({ length: 25 }, (value, key) => key + 1);
-
+  activeFieldset: string | null = null;
+  showInfo = false;
   userRole: string | null = 'null';
+  videoSelected;
+  visible: boolean;
   constructor(
     private supabaseService: SupabaseService,
     private sanitizer: DomSanitizer,
@@ -40,7 +56,7 @@ export class EjercicioComponent {
       comentarios: new FormControl(''),
     });
     this.ejercicioForm.valueChanges.subscribe((elem) => {});
-    this.supabaseService.userSupabaseData$.subscribe((elem) => {
+    this.supabaseService.patientData$.subscribe((elem) => {
       this.user = elem;
       if (this.user) {
         this.getUserVideos(this.user.video);
@@ -48,6 +64,30 @@ export class EjercicioComponent {
     });
     this.getPatients();
     this.onChanges();
+    this.numbers = this.numbers.map((elem) => {
+      return { name: elem } as any;
+    });
+  }
+
+  setActiveField(fieldsetId: string) {
+    this.activeFieldset =
+      this.activeFieldset === fieldsetId ? null : fieldsetId;
+  }
+
+  showUserInfo() {
+    this.showInfo = !this.showInfo;
+  }
+
+  isFieldsetActive(fieldsetId: string) {
+    return this.activeFieldset === fieldsetId;
+  }
+
+  selectVideo(id) {
+    if (this.videoSelected == id) {
+      this.videoSelected = null;
+      return;
+    }
+    this.videoSelected = id;
   }
 
   async getUserVideos(videos) {
@@ -72,6 +112,9 @@ export class EjercicioComponent {
       return {
         ...elem,
         id: elem.name.split('.')[0],
+        url: this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.videoUrl + elem.name
+        ),
       };
     });
     let newvideos = new_array.filter((elem) => {
@@ -85,10 +128,7 @@ export class EjercicioComponent {
 
       this.hasVideos = this.videos.length > 0;
     }
-    console.log('Videos: ', this.videos);
     this.addExerciseInfo();
-    console.log(this.videos);
-
   }
 
   addExerciseInfo() {
@@ -114,11 +154,9 @@ export class EjercicioComponent {
       this.userVideos = this.selectedPatient.video;
     });
 
-    this.ejercicioForm.get('repeticiones')?.valueChanges.subscribe((id) => {
-    });
+    this.ejercicioForm.get('repeticiones')?.valueChanges.subscribe((id) => {});
 
-    this.ejercicioForm.get('series')?.valueChanges.subscribe((id) => {
-    });
+    this.ejercicioForm.get('series')?.valueChanges.subscribe((id) => {});
 
     this.ejercicioForm.get('comentarios')?.valueChanges.subscribe((id) => {});
   }
@@ -131,7 +169,7 @@ export class EjercicioComponent {
 
   getPatients() {
     this.supabaseService.getPatients().then((data) => {
-      this.supabaseService.userSupabaseData$
+      this.supabaseService.patientData$
         .pipe(takeUntil(this.destroy$))
         .subscribe((elem) => {
           if (elem) {
@@ -149,6 +187,10 @@ export class EjercicioComponent {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       this.videoUrl + videoName
     );
+  }
+
+  showDialog() {
+    this.visible = !this.visible;
   }
 
   requestFullscreen(event: Event) {

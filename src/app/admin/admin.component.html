@@ -3,6 +3,7 @@
     <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <input
+          *ngIf="imageFile"
           type="text"
           class="form-control videoName"
           id="videoName"
@@ -11,17 +12,34 @@
           #videoName
         />
         <input
+          id="fileInput"
           type="file"
           class="form-control"
-          id="username"
+          style="display: none"
+          formControlName="video"
           (change)="onVideoSelected($event)"
         />
+        <h1 *ngIf="showError">Tu video tiene que ser formato .mp4 !</h1>
+        <!-- //poner nombre -->
+        <h1 *ngIf="imageFile">Selected Video: {{ imageFile.name }}</h1>
+        <button type="button" class="btn btn-primary" (click)="openFileInput()">
+          Selecciona un video
+        </button>
         <button
+          [disabled]="adminForm.invalid"
+          [ngStyle]="{ opacity: adminForm.valid ? '1' : '.3' }"
+          *ngIf="imageFile"
           type="button"
-          class="btn btn-primary"
-          (click)="onUpload(videoName.value)"
+          class="btn btn-secondary"
+          (click)="
+            onUpload(
+              adminForm.get('videoName').value
+                ? adminForm.get('videoName').value
+                : imageFile.name
+            )
+          "
         >
-          Upload
+          Subir video
         </button>
       </div>
     </form>

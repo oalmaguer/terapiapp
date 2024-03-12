@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from '../supabase.service';
 import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notas',
@@ -20,11 +21,11 @@ export class NotasComponent {
   user: any;
   constructor(
     private supabaseService: SupabaseService,
-    private cd: ChangeDetectorRef
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.supabaseService.userSupabaseData$.subscribe((user) => {
+    this.supabaseService.patientData$.subscribe((user) => {
       if (user) {
         this.user = user;
         this.userRole = user.role;
@@ -39,20 +40,21 @@ export class NotasComponent {
   }
 
   onChanges() {
-    this.adminForm.get('patient')?.valueChanges.subscribe((id) => {
-      this.selectedPatient = this.patients.find((elem) => elem.id == id);
+    this.adminForm.get('patient')?.valueChanges.subscribe((patient) => {
+      if (!patient) return;
+      this.selectedPatient = this.patients.find(
+        (elem) => elem.id == patient.id
+      );
       if (this.selectedPatient) {
-        console.log(this.user);
         this.getNotes();
         this.getUserImage(this.selectedPatient);
-
       }
     });
   }
 
   getPatients() {
     this.supabaseService.getPatients().then((data) => {
-      this.supabaseService.userSupabaseData$
+      this.supabaseService.patientData$
         .pipe(takeUntil(this.destroy$))
         .subscribe((elem) => {
           if (elem) {
@@ -62,6 +64,18 @@ export class NotasComponent {
             );
           }
         });
+      this.setUserIfParam();
+    });
+  }
+
+  setUserIfParam() {
+    this.route.params.subscribe((params) => {
+      if (params['patient']) {
+        let patient = this.patients.find(
+          (elem) => elem.email == params['patient']
+        );
+        this.adminForm.get('patient')?.setValue(patient);
+      }
     });
   }
 
@@ -85,7 +99,6 @@ export class NotasComponent {
     this.supabaseService
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
-        console.log(data);
         if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;
@@ -98,7 +111,6 @@ export class NotasComponent {
       .writeNote(this.selectedPatient.id, this.adminForm.get('note')?.value)
       .then((data) => {
         if (data) {
-
           this.getNotes(this.selectedPatient.id);
         }
         // if (data.data.length > 0) {

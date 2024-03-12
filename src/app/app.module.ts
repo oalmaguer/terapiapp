@@ -1,5 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environment/environment';
@@ -16,6 +17,19 @@ import { SupabaseService } from './supabase.service';
 import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
 import { NotasComponent } from './notas/notas.component';
 import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { CitasComponent } from './citas/citas.component';
+import { CalendarModule } from 'primeng/calendar';
+import { RouterModule } from '@angular/router';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DividerModule } from 'primeng/divider';
+import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -29,12 +43,25 @@ import { CommonModule } from '@angular/common';
     AdminComponent,
     RegisterDoctorsComponent,
     NotasComponent,
+    CitasComponent,
+    CitaPacienteComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     CommonModule,
+    DropdownModule,
+    BrowserAnimationsModule,
+    CardModule,
+    ButtonModule,
+    CalendarModule,
+    RouterModule,
+    DialogModule,
+    FullCalendarModule,
+    InputTextareaModule,
+    DividerModule,
+    DataViewModule,
   ],
   providers: [
     SupabaseService,

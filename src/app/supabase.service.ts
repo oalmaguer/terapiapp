@@ -9,8 +9,11 @@ import { environment } from 'src/environment/environment';
 })
 export class SupabaseService {
   private supa_client: SupabaseClient;
-  public userSupabaseData$ = new BehaviorSubject(null);
+  public patientData$ = new BehaviorSubject(null);
   public userData$ = new BehaviorSubject(null);
+
+  public patientsList$ = new BehaviorSubject(null);
+  public patientsList = this.patientsList$.asObservable();
   constructor() {
     this.supa_client = createClient(
       environment.supabase.url,
@@ -23,7 +26,7 @@ export class SupabaseService {
           this.userData$.next(session.user);
           const data = this.userInformation(session.user);
           data.then((elem) => {
-            this.userSupabaseData$.next(elem.data[0]);
+            this.patientData$.next(elem.data[0]);
           });
         } else if (event === 'SIGNED_OUT') {
           // handle sign out event
@@ -123,11 +126,10 @@ export class SupabaseService {
   }
 
   async removeImage(userId, imageName) {
-        //remove image first
-    return  await this.supa_client
-  .storage
-  .from('avatars2')
-  .remove([`${userId}/${imageName}`])
+    //remove image first
+    return await this.supa_client.storage
+      .from('avatars2')
+      .remove([`${userId}/${imageName}`]);
   }
 
   getSupabaseClient() {
@@ -150,6 +152,17 @@ export class SupabaseService {
 
   async getNotes(userId) {
     return await this.supa_client.from('notes').select('*').eq('id', userId);
+  }
+
+  async getVideosByFolder(folderId) {
+    const { data, error } = await this.supa_client.storage
+      .from('videos')
+      .list(folderId.name);
+
+    if (error) {
+      console.error(error);
+    }
+    return data;
   }
 
   async assignVideo(
@@ -180,6 +193,32 @@ export class SupabaseService {
       .from('patients')
       .update([{ video: Array.from(rmDup) }])
       .eq('id', patiendId);
+  }
+
+  getCitas() {
+    return this.supa_client.from('citas').select('*');
+  }
+
+  getCitasById(doctorId) {
+    return this.supa_client.from('citas').select('*').eq('doctorId', doctorId);
+  }
+
+  getCitasByPatientId(pacienteId) {
+    return this.supa_client
+      .from('citas')
+      .select('*')
+      .eq('pacienteId', pacienteId);
+  }
+
+  addDate(date, doctorId, patient, description) {
+    return this.supa_client.from('citas').insert({
+      fecha_inicio: date,
+      estado: 1,
+      descripcion: description,
+      doctorId: doctorId,
+      pacienteId: patient.id,
+      nombrePaciente: patient.name,
+    });
   }
 
   async getExercises() {}

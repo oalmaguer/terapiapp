@@ -3,11 +3,19 @@
     <h1>Selecciona un paciente</h1>
     <form [formGroup]="adminForm">
       <div class="form-group" *ngIf="patients">
-        <select class="select-patients" formControlName="patient">
+        <p-dropdown
+          formControlName="patient"
+          [options]="patients"
+          placeholder="Selecciona un Paciente"
+          optionLabel="name"
+          [filter]="true"
+          (onChange)="onPatientSelect($event.target.value)"
+        ></p-dropdown>
+        <!-- <select class="select-patients" formControlName="patient">
           <option *ngFor="let patient of patients" value="{{ patient.id }}">
             {{ patient.name }}
           </option>
-        </select>
+        </select> -->
       </div>
 
       <ng-container *ngIf="selectedPatient">
@@ -53,7 +61,7 @@
       class="notes"
       [ngClass]="{ 'no-notes': patientNotes.length < 1 }"
     > -->
-      <h1>No hay notas</h1>
+    <h1>No hay notas</h1>
     <!-- </div> -->
   </ng-template>
 </div>

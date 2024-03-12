@@ -1,3 +1,9 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .container {
   padding: 2rem;
 }
@@ -9,5 +15,35 @@
 }
 
 .videoName {
-  padding: 0.2rem;
+  padding: 0.7rem;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #d3d3d3;
+}
+
+.btn {
+  padding: 0.3rem;
+  padding-block: 0.7rem;
+  min-width: 80vh;
+  min-height: 5vh;
+  border: 1px solid #b4d4ff;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: #92e3a9;
+  color: whitesmoke;
+  transition: background-color 0.5s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.btn-hover {
+  box-shadow: rgb(6, 255, 118) 0px 20px 30px -10px;
+}
+
+.btn-secondary {
+  background-color: #ff8c8c;
 }

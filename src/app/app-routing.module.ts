@@ -10,6 +10,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegisterDoctorsComponent } from './register-doctors/register-doctors.component';
 import { NotasComponent } from './notas/notas.component';
+import { CitasComponent } from './citas/citas.component';
+import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -36,6 +38,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
+  { path: 'citas', component: CitasComponent, canActivate: [AuthGuard] },
+  {
+    path: 'citaPaciente',
+    component: CitaPacienteComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
 ];
 @NgModule({

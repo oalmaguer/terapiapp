@@ -1,0 +1,74 @@
+<div class="main">
+  <div class="calendar">
+    <form [formGroup]="form">
+      <h1>Selecciona una fecha</h1>
+      <full-calendar [options]="calendarOptions"></full-calendar>
+      <p-dialog
+        header="Fecha seleccionada: {{ selectedCalendarDate?.dateStr }}"
+        [(visible)]="showSetDate"
+        [style]="{ width: '50vw' }"
+        [modal]="true"
+        [closeOnEscape]="true"
+        (onHide)="onClose()"
+      >
+        <div class="drops">
+          <p-dropdown
+            [options]="hours"
+            placeholder="Selecciona una hora para la cita"
+            optionLabel="name"
+            appendTo="body"
+            (onChange)="onHourSelect($event.value)"
+            formControlName="hour"
+          ></p-dropdown>
+          <p-dropdown
+            [options]="patients"
+            placeholder="Selecciona un paciente"
+            optionLabel="name"
+            appendTo="body"
+            (onChange)="onPatientSelect($event.value)"
+            formControlName="patient"
+          ></p-dropdown>
+          <p class="errorMessage" *ngIf="!dateValid">
+            Esa fecha ya está reservada, intenta seleccionar otra.
+          </p>
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            formControlName="description"
+            placeholder="Escribe una descripción o comentario acerca de tu cita"
+          ></textarea>
+        </div>
+
+        <p-button
+          *ngIf="form.valid && dateValid"
+          class="btn"
+          (click)="setDate()"
+        >
+          Confirmar
+        </p-button>
+      </p-dialog>
+    </form>
+  </div>
+</div>
+
+<p-dialog
+  header="Cita seleccionada"
+  [(visible)]="showDateModal"
+  [style]="{ width: '30vw' }"
+  [modal]="true"
+>
+  <div
+    style="text-align: center"
+    class="flex p-text-secondary py-2 justify-content-center"
+  >
+    <p-divider type="solid"></p-divider>
+    <p>Evento: {{ eventInfo?.title }}</p>
+    <p-divider type="solid"></p-divider>
+    <p>Fecha: {{ eventInfo?.date }}</p>
+    <p-divider type="solid"></p-divider>
+    <p>Hora: {{ eventInfo?.hour }}</p>
+    <p-divider type="solid"></p-divider>
+    <p>Descripción: {{ eventInfo?.description }}</p>
+  </div>
+</p-dialog>

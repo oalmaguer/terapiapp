@@ -1,0 +1,57 @@
+:host {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .p-dropdown {
+    width: 50%;
+  }
+
+  .p-dialog-title {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.main {
+  padding: 2rem;
+}
+
+.btn {
+  margin-top: 2rem;
+  // padding: 0.8rem 1rem;
+  // border-radius: 5px;
+  // border: 1px solid #d3d3d3;
+  // background-color: #178751;
+  // color: whitesmoke;
+  // transition: all 0.2s ease-in-out;
+}
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.btn-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 1rem;
+}
+
+.drops {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
