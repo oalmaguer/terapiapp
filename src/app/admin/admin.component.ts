@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from '../supabase.service';
-import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,14 +8,12 @@ import { UsersService } from '../users.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent {
-  constructor(
-    private supabaseService: SupabaseService,
-    private userService: UsersService
-  ) {}
+  constructor(private supabaseService: SupabaseService) {}
   adminForm: FormGroup;
   user;
   imageFile: any;
   showError: boolean = false;
+  successMessage: boolean = false;
 
   ngOnInit() {
     this.adminForm = new FormGroup({
@@ -26,7 +23,7 @@ export class AdminComponent {
       ]),
       video: new FormControl('', [Validators.required]),
     });
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
       this.user = elem;
     });
 
@@ -67,11 +64,15 @@ export class AdminComponent {
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('videos')
-      .upload(`${this.user.id}/${name}_${Date.now()}.mp4`, this.imageFile);
+      .upload(`${name}_${Date.now()}.mp4`, this.imageFile);
 
     if (error) {
       console.error(error);
       return;
+    }
+    console.log(data);
+    if (data) {
+      this.successMessage = true;
     }
     // this.successMessage = true;
     // setTimeout(() => {

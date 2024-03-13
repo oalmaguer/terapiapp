@@ -6,7 +6,7 @@
         Asignar video a paciente
       </button>
       <div class="todo" *ngIf="videoSelected == video.id" [@inOutAnimation]>
-        <div class="form-group" *ngIf="userRole !== 'patient'; else elseBlock">
+        <div class="form-group" *ngIf="user.role !== 'patient'; else elseBlock">
           <form [formGroup]="userForm">
             <h3>Selecciona un paciente para asignarle este video</h3>
             <p-dropdown
@@ -55,7 +55,7 @@
             </form>
 
             <button
-              *ngIf="selectedPatient && video.id == selectedVideoId"
+              *ngIf="true"
               class="btn"
               (click)="assignVideo(video.id, userForm.value.patient)"
               [disabled]="!selectedPatient"

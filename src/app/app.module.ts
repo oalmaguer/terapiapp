@@ -30,6 +30,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DividerModule } from 'primeng/divider';
 import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
 import { DataViewModule } from 'primeng/dataview';
+import { UsersService } from './users.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { DataViewModule } from 'primeng/dataview';
   ],
   providers: [
     SupabaseService,
+    UsersService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeSupabase,

@@ -55,8 +55,7 @@ export class EjercicioComponent {
       repeticiones: new FormControl('', [Validators.required]),
       comentarios: new FormControl(''),
     });
-    this.ejercicioForm.valueChanges.subscribe((elem) => {});
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
       this.user = elem;
       if (this.user) {
         this.getUserVideos(this.user.video);
@@ -87,12 +86,13 @@ export class EjercicioComponent {
       this.videoSelected = null;
       return;
     }
+    console.log(id);
     this.videoSelected = id;
   }
 
   async getUserVideos(videos) {
     let userHasVideos = videos;
-
+    console.log(userHasVideos);
     if (!this.user) return;
     const { data, error } = await this.supabaseService
       .getStorage()
@@ -104,6 +104,7 @@ export class EjercicioComponent {
       return;
     }
 
+    console.log(data);
     let removeEmpty = data.filter(
       (elem) => elem.name !== '.emptyFolderPlaceholder'
     );
@@ -117,8 +118,9 @@ export class EjercicioComponent {
         ),
       };
     });
+
     let newvideos = new_array.filter((elem) => {
-      return userHasVideos.includes(parseInt(elem.id));
+      return userHasVideos.includes(elem.name.split('.')[0]);
     });
 
     if (videos.length == 1 && videos[0] === 1000) {
@@ -127,6 +129,9 @@ export class EjercicioComponent {
       this.videos = newvideos;
 
       this.hasVideos = this.videos.length > 0;
+    }
+    if (this.user.role == 'doctor' || this.user.role == 'admin') {
+      this.videos = new_array;
     }
     this.addExerciseInfo();
   }
@@ -149,8 +154,9 @@ export class EjercicioComponent {
   }
 
   onChanges() {
-    this.userForm.get('patient')?.valueChanges.subscribe((id) => {
-      this.selectedPatient = this.patients.find((elem) => elem.id == id);
+    this.userForm.get('patient')?.valueChanges.subscribe((user) => {
+      console.log(user);
+      this.selectedPatient = user;
       this.userVideos = this.selectedPatient.video;
     });
 
@@ -168,19 +174,14 @@ export class EjercicioComponent {
   }
 
   getPatients() {
-    this.supabaseService.getPatients().then((data) => {
-      this.supabaseService.patientData$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((elem) => {
-          if (elem) {
-            this.userRole = elem.role;
-            this.doctorId = elem.doctor;
-            this.patients = data.data.filter(
-              (elem) => elem.doctor == this.doctorId
-            );
-          }
-        });
-    });
+    this.supabaseService.patientsList$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((elem) => {
+        if (elem) {
+          this.patients = elem;
+          this.doctorId = this.user.doctor;
+        }
+      });
   }
 
   getSafeUrl(videoName: string): SafeResourceUrl {
@@ -212,7 +213,7 @@ export class EjercicioComponent {
   async assignVideo(id, patient) {
     await this.supabaseService.assignVideo(
       this.userVideos,
-      parseInt(this.selectedVideoId),
+      this.videoSelected,
       this.selectedPatient.id,
       this.ejercicioForm.value.series,
       this.ejercicioForm.value.repeticiones,

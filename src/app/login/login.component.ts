@@ -10,7 +10,6 @@ import { SupabaseService } from '../supabase.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-
   userForm: FormGroup;
   errorMessage: string;
   constructor(
@@ -38,8 +37,6 @@ export class LoginComponent {
       })
       .catch((err) => {});
   }
-
-
 
   onSubmit() {}
 }

@@ -18,7 +18,6 @@ export class CitaPacienteComponent {
         this.getPatientAppointment();
       }
     });
-    this.supabaseService.getPatients();
   }
 
   getPatientAppointment() {

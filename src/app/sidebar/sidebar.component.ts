@@ -28,11 +28,11 @@ export class SidebarComponent {
 
   ngOnInit() {
     this.imageChanges();
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
+      console.log(elem);
       if (elem) {
         this.user = elem;
         this.userRole = elem.role;
-
         this.getUserImage(this.user);
       }
     });
@@ -62,14 +62,14 @@ export class SidebarComponent {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
   logOut() {
     localStorage.clear();
     // this.afAuth.signOut();
     this.router.navigate(['login']);
-    this.supabaseService.userData$.next(null);
+    this.supabaseService.sessionInfo$.next(null);
     this.supabaseService.patientData$.next(null);
     this.supabaseService.signOut();
   }

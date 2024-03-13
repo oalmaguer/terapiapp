@@ -19,6 +19,7 @@
           formControlName="video"
           (change)="onVideoSelected($event)"
         />
+        <h1 *ngIf="successMessage">Video subido con exito</h1>
         <h1 *ngIf="showError">Tu video tiene que ser formato .mp4 !</h1>
         <!-- //poner nombre -->
         <h1 *ngIf="imageFile">Selected Video: {{ imageFile.name }}</h1>

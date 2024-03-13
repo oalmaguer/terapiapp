@@ -36,11 +36,10 @@ export class PerfilComponent {
       phone: new FormControl(),
       imageUrl: new FormControl(),
     });
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
         this.userRole = elem.role;
-
         this.getUserImage(this.user);
         this.getUserDoctors(this.user.doctor);
       }

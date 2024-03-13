@@ -49,7 +49,7 @@ export class CitasComponent {
   constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit() {
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
       if (elem) {
         this.user = elem;
         this.getCitas();
@@ -88,13 +88,12 @@ export class CitasComponent {
       // },
     };
     this.supabaseService.patientsList$.subscribe((elem) => {
+      console.log(elem);
       if (elem) {
         this.patients = elem;
         // this.processCitasForCalendar();
       }
     });
-
-    this.form.valueChanges.subscribe((value) => {});
   }
 
   openDialog(title, start, description) {

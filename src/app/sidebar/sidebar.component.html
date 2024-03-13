@@ -36,7 +36,9 @@
         src="../../assets/svg/notes.svg"
         alt="logo"
       /><a>{{
-        role === "admin" || role === "doctor" ? "Pacientes" : "Notas de Doctor"
+        userRole === "admin" || userRole === "doctor"
+          ? "Pacientes"
+          : "Notas de Doctor"
       }}</a>
     </div>
     <div class="item" [routerLink]="['/perfil']">
@@ -48,18 +50,18 @@
       <a>Ejercicios</a>
     </div>
 
-    <div *ngIf="role === 'admin'" [routerLink]="['/admin']" class="item">
+    <div *ngIf="userRole === 'admin'" [routerLink]="['/admin']" class="item">
       <img style="width: 32px" src="../../assets/svg/video.svg" alt="logo" />
       <a>Agregar video</a>
     </div>
 
-    <div *ngIf="role === 'admin'" [routerLink]="['/citas']" class="item">
+    <div *ngIf="userRole === 'admin'" [routerLink]="['/citas']" class="item">
       <img style="width: 32px" src="../../assets/svg/cita.svg" alt="logo" />
       <a>Citas</a>
     </div>
 
     <div
-      *ngIf="role === 'patient'"
+      *ngIf="userRole === 'patient'"
       [routerLink]="['/citaPaciente']"
       class="item"
     >

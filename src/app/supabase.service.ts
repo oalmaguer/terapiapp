@@ -2,7 +2,7 @@ import { Injectable, APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import * as e from 'cors';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { environment } from 'src/environment/environment';
 @Injectable({
   providedIn: 'root',
@@ -10,8 +10,9 @@ import { environment } from 'src/environment/environment';
 export class SupabaseService {
   private supa_client: SupabaseClient;
   public patientData$ = new BehaviorSubject(null);
-  public userData$ = new BehaviorSubject(null);
+  public sessionInfo$ = new BehaviorSubject(null);
 
+  public userInfo$ = new BehaviorSubject(null);
   public patientsList$ = new BehaviorSubject(null);
   public patientsList = this.patientsList$.asObservable();
   constructor() {
@@ -23,11 +24,11 @@ export class SupabaseService {
     const { data } = this.supa_client.auth.onAuthStateChange(
       (event, session) => {
         if (event === 'SIGNED_IN') {
-          this.userData$.next(session.user);
-          const data = this.userInformation(session.user);
-          data.then((elem) => {
-            this.patientData$.next(elem.data[0]);
-          });
+          // this.sessionInfo$.next(session.user);
+          // const data = this.userInformation(session.user);
+          // data.then((elem) => {
+          //   this.patientData$.next(elem.data[0]);
+          // });
         } else if (event === 'SIGNED_OUT') {
           // handle sign out event
         } else if (event === 'PASSWORD_RECOVERY') {
@@ -107,11 +108,17 @@ export class SupabaseService {
       .eq('paciente_id', pacienteId);
   }
 
-  async userInformation(user) {
-    return await this.supa_client
+  async setUserInformation(user) {
+    let data = await this.supa_client
       .from('patients')
       .select('*')
-      .eq('email', user.email);
+      .eq('email', user.email)
+      .then((elem) => {
+        if (elem) {
+          console.log(elem);
+          this.userInfo$.next(elem.data[0]);
+        }
+      });
   }
   async getPatients() {
     return await this.supa_client.from('patients').select('*');
@@ -180,13 +187,14 @@ export class SupabaseService {
       videos = [...userVideos, videoId];
     }
 
-    let rmDup = new Set(videos.map((elem) => parseInt(elem)));
+    let rmDup = new Set(videos.map((elem) => elem));
+    console.log(rmDup);
 
     await this.supa_client.from('asignaciones').insert({
       paciente_id: patiendId,
       video_id: videoId,
-      series: series,
-      repeticiones: repeticiones,
+      series: series.name,
+      repeticiones: repeticiones.name,
       comentario: comentario,
     });
     return await this.supa_client

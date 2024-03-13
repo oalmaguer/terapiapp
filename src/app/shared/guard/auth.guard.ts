@@ -14,14 +14,24 @@ import { SupabaseService } from 'src/app/supabase.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
+  sessionStore: any;
   constructor(
     public router: Router,
     private usersService: UsersService,
     private supabaseService: SupabaseService
   ) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-    this.supabaseService.userData$.subscribe((elem) => {
-      if (elem?.role === 'authenticated') {
+    console.log('entra al can activate');
+
+    if (this.sessionStore) {
+      return true;
+    }
+    this.supabaseService.getSession().then((elem) => {
+      this.supabaseService.sessionInfo$.next(elem.data.session);
+      console.log(elem);
+      if (elem?.data.session.user.role === 'authenticated') {
+        this.sessionStore = elem.data.session;
+        // User is authenticated, allow access
         return true; // elem is authenticated, allow access
       } else {
         this.router.navigate(['/login']);
@@ -36,7 +46,7 @@ export class AuthGuard implements CanActivate {
     if (user) {
       // User is authenticated, allow access
       user.then((elem) => {
-        this.usersService.userData$.next(elem);
+        this.supabaseService.sessionInfo$.next(elem);
 
         hasUser = true;
       });
@@ -49,6 +59,8 @@ export class AuthGuard implements CanActivate {
   }
 
   userStatus() {
+    console.log('checking login');
+
     this.usersService.userIsLoggedIn$.subscribe((aUser: any | null) => {
       //handle auth state changes here. Note, that user will be null if there is no currently logged in user.
       aUser;

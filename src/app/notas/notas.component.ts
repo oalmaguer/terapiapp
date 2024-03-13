@@ -25,10 +25,14 @@ export class NotasComponent {
   ) {}
 
   ngOnInit() {
-    this.supabaseService.patientData$.subscribe((user) => {
+    this.supabaseService.userInfo$.subscribe((user) => {
       if (user) {
+        console.log(user);
         this.user = user;
         this.userRole = user.role;
+        if (this.userRole == 'patient') {
+          this.loadPatientNotes();
+        }
       }
     });
     this.adminForm = new FormGroup({
@@ -37,6 +41,13 @@ export class NotasComponent {
     });
     this.getPatients();
     this.onChanges();
+  }
+
+  loadPatientNotes() {
+    this.supabaseService.getNotes(this.user.id).then((data) => {
+      console.log(data);
+      this.patientNotes = data.data;
+    });
   }
 
   onChanges() {
@@ -53,18 +64,11 @@ export class NotasComponent {
   }
 
   getPatients() {
-    this.supabaseService.getPatients().then((data) => {
-      this.supabaseService.patientData$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((elem) => {
-          if (elem) {
-            this.doctorId = elem.doctor;
-            this.patients = data.data.filter(
-              (elem) => elem.doctor == this.doctorId
-            );
-          }
-        });
-      this.setUserIfParam();
+    this.supabaseService.patientsList$.subscribe((data) => {
+      if (data) {
+        this.patients = data;
+        this.setUserIfParam();
+      }
     });
   }
 
@@ -99,6 +103,7 @@ export class NotasComponent {
     this.supabaseService
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
+        console.log(data);
         if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;
@@ -136,6 +141,6 @@ export class NotasComponent {
   }
 
   ngOnDestroy() {
-    this.destroy$.unsubscribe();
+    // this.destroy$.unsubscribe();
   }
 }

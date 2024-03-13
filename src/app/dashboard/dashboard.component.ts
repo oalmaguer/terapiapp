@@ -20,35 +20,29 @@ export class DashboardComponent {
   doctorId: any;
   patients: any[];
   constructor(
-    private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
     private supabaseService: SupabaseService
   ) {}
   ngOnInit(): void {
-    this.supabaseService.userData$.subscribe((elem) => {
-      // if (elem) {
-      //   this.userRole = elem.role;
-      //   this.user = elem;
-      //   // this.getUserData(this.user);
-      // }
-      this.supabaseService.userInformation(elem).then((user) => {
-        // this.user = user.data[0];
-        // this.getUserImage(this.user);
-        this.userRole = user.data[0].role;
-        this.user = user.data[0];
-      });
+    console.log('entra');
+    this.supabaseService.userInfo$.subscribe((user) => {
+      // this.user = user.data[0];
+      console.log(user);
+      this.user = user;
+      // this.getUserImage(this.user);
+      this.userRole = user.role;
+      this.getPatients();
     });
-    this.getPatients();
   }
 
-  getUserData(userData) {
-    let user = this.supabaseService.userInformation(userData);
-    user.then((elem) => {
-      this.user = elem.data[0];
-      this.getUserImage(this.user);
-    });
-  }
+  // getUserData(userData) {
+  //   let user = this.supabaseService.userInfo$.subscribe((userInfo) => {
+  //     console.log(userInfo);
+  //     this.user = userInfo.data[0];
+  //     this.getUserImage(this.user);
+  //   });
+  // }
 
   async uploadImage() {
     const { data, error } = await this.supabaseService
@@ -91,17 +85,11 @@ export class DashboardComponent {
   }
 
   getPatients() {
-    this.supabaseService.getPatients().then((data) => {
-      this.supabaseService.patientData$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((elem) => {
-          if (elem) {
-            this.doctorId = elem.doctor;
-            this.patients = data.data.filter(
-              (elem) => elem.doctor == this.doctorId
-            );
-          }
-        });
+    this.supabaseService.patientsList$.subscribe((data) => {
+      console.log(data);
+      if (data) {
+        this.patients = data;
+      }
     });
   }
 

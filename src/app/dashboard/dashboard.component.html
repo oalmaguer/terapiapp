@@ -1,7 +1,6 @@
 <div class="container">
   <p-dropdown
     *ngIf="userRole === 'admin' || userRole === 'doctor'"
-    style="padding-top: 2rem"
     [options]="patients"
     placeholder="Busca un paciente para ver su perfil"
     optionLabel="name"

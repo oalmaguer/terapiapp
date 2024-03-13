@@ -17,22 +17,19 @@ export class UsersService {
 
   authStateSubscription: Subscription;
 
-  constructor() {
-
-  }
-  userData$ = new BehaviorSubject<any>(null);
+  constructor() {}
+  // sessionInfo$ = new BehaviorSubject<any>(null);
   userIsLoggedIn$ = new BehaviorSubject<any>(false);
   sessionChanges$ = new Subject();
   imageChanged$ = new Subject();
 
   getUserData() {
-    return this.userData$;
+    // return this.sessionInfo$;
   }
 
   getLoginStatus() {
     return this.isLoggedIn;
   }
-
 
   filterUsers(users, email) {
     users;
