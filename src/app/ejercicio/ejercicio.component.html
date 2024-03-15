@@ -1,8 +1,15 @@
+<h1 style="padding: 2rem; text-align: center">
+  {{ user.role === "patient" ? "Ejercicios asignados" : "Asignar ejercicios" }}
+</h1>
 <div class="videos" *ngIf="true">
   <p-card header="{{ video.name }}" *ngFor="let video of videos; let i = index">
     <div class="video">
       <iframe [src]="video.url" allowfullscreen></iframe>
-      <button class="btn" (click)="selectVideo(video.id)">
+      <button
+        *ngIf="user.role !== 'patient'; else elseBlock"
+        class="btn"
+        (click)="selectVideo(video.id)"
+      >
         Asignar video a paciente
       </button>
       <div class="todo" *ngIf="videoSelected == video.id" [@inOutAnimation]>

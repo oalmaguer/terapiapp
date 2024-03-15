@@ -21,15 +21,21 @@
   border: 1px solid #d3d3d3;
 }
 
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn {
   padding: 0.3rem;
   padding-block: 0.7rem;
-  min-width: 80vh;
-  min-height: 5vh;
+  max-width: 50vh;
+  min-height: 6vh;
   border: 1px solid #b4d4ff;
   border-radius: 10px;
   margin-top: 1rem;
-  background-color: #92e3a9;
+  background-color: #46b0da;
   color: whitesmoke;
   transition: background-color 0.5s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -38,10 +44,20 @@
   font-size: 1.5rem;
   cursor: pointer;
   transition: box-shadow 0.5s ease-in-out;
+  color: #fff;
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
-.btn-hover {
-  box-shadow: rgb(6, 255, 118) 0px 20px 30px -10px;
+.btn:hover {
+  background-color: #85bae6;
+  text-shadow: 0px 0px 30px #64e4ab;
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .btn-secondary {

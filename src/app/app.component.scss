@@ -5,6 +5,7 @@
 .sidebar {
   top: 0;
   left: 0;
+  // margin-right: 2rem;
   // height: 100vh;
   background-color: #254f71;
   color: black;
@@ -13,4 +14,17 @@
 .center-login {
   justify-content: center;
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin: 0;
+    /* other styles for smaller screens */
+  }
+}
+
+.menu-img {
+  padding: 2rem;
+  width: 100px;
+  position: fixed;
 }

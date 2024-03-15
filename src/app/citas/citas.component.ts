@@ -82,7 +82,7 @@ export class CitasComponent {
       },
       editable: true,
       selectable: true,
-      allDay: false,
+      aspectRatio: 3,
       // eventClick: (arg) => {
       //   console.log(arg);
       // },
@@ -169,7 +169,6 @@ export class CitasComponent {
         title: `Cita con: ${cita.nombrePaciente}`,
         start: cita.fecha_inicio,
         description: cita.descripcion,
-        allDay: false,
       };
     });
 

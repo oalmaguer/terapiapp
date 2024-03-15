@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" *ngIf="displayMenu">
   <div class="main-logo">
     <img
       style="width: 64px; filter: hue-rotate(85deg)"
@@ -7,9 +7,14 @@
     />
     <h3 class="logo">Terapiapp</h3>
   </div>
-  <div class="image">
+  <div class="item" (click)="showSidebar()">
+    <img style="width: 32px" src="../../assets/images/menus.png" alt="logo" />
+    <a style="font-size: 1rem">Esconder menu</a>
+  </div>
+  <div class="image" [routerLink]="['/perfil']">
     <div class="image-box">
       <img
+        *ngIf="true"
         class="img"
         src="{{ imageUrl }}
       "
@@ -19,7 +24,7 @@
     <div class="image-info">
       <span class="fa-solid fa-user"></span>
       <h4>{{ user?.name }}</h4>
-      <button class="btn" [routerLink]="['/perfil']">
+      <button class="btn">
         <span class="text">Ver Perfil</span>
       </button>
     </div>
@@ -50,7 +55,11 @@
       <a>Ejercicios</a>
     </div>
 
-    <div *ngIf="userRole === 'admin'" [routerLink]="['/admin']" class="item">
+    <div
+      *ngIf="userRole === 'admin' || userRole === 'doctor'"
+      [routerLink]="['/admin']"
+      class="item"
+    >
       <img style="width: 32px" src="../../assets/svg/video.svg" alt="logo" />
       <a>Agregar video</a>
     </div>
@@ -65,13 +74,26 @@
       [routerLink]="['/citaPaciente']"
       class="item"
     >
-      <i class="gg-alarm"> </i>
+      <img style="width: 32px" src="../../assets/svg/cita.svg" alt="logo" />
       <a>Ver mi cita</a>
     </div>
 
-    <div class="item">
+    <div
+      *ngIf="userRole === 'doctor' || userRole === 'admin'"
+      [routerLink]="['/asistente']"
+      class="item"
+    >
+      <img
+        style="width: 32px"
+        src="../../assets/images/mascot.png"
+        alt="logo"
+      />
+      <a>Mi Asistente</a>
+    </div>
+
+    <div class="item" (click)="logOut()">
       <img style="width: 32px" src="../../assets/svg/exit.png" alt="logo" />
-      <a class="btn" (click)="logOut()">Cerrar Sesión</a>
+      <a class="btn">Cerrar Sesión</a>
     </div>
   </div>
 

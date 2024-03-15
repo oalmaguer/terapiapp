@@ -91,8 +91,6 @@ export class EjercicioComponent {
   }
 
   async getUserVideos(videos) {
-    let userHasVideos = videos;
-    console.log(userHasVideos);
     if (!this.user) return;
     const { data, error } = await this.supabaseService
       .getStorage()
@@ -120,7 +118,7 @@ export class EjercicioComponent {
     });
 
     let newvideos = new_array.filter((elem) => {
-      return userHasVideos.includes(elem.name.split('.')[0]);
+      return videos.includes(elem.name.split('.')[0]);
     });
 
     if (videos.length == 1 && videos[0] === 1000) {
@@ -131,6 +129,7 @@ export class EjercicioComponent {
       this.hasVideos = this.videos.length > 0;
     }
     if (this.user.role == 'doctor' || this.user.role == 'admin') {
+      console.log('no es paciente');
       this.videos = new_array;
     }
     this.addExerciseInfo();

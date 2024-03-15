@@ -1,5 +1,6 @@
 :host {
   flex: 1;
+  margin-top: 2rem;
 }
 
 .content {
@@ -37,7 +38,10 @@
 }
 
 .card-container {
+  display: flex;
   gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
 }
 
 .form-group {
@@ -45,6 +49,7 @@
   flex-direction: column;
   gap: 0.6rem;
   flex-wrap: wrap;
+  text-align: center;
 }
 
 .items {
@@ -85,7 +90,7 @@ button {
   display: flex;
   flex-direction: column;
   background-color: whitesmoke;
-  max-width: 50vw;
+  max-width: 100%;
   padding: 2rem;
   margin-top: 2rem;
   border-radius: 15px 15px 15px 15px;
@@ -127,4 +132,18 @@ button {
 
 .text span {
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .items {
+    flex-direction: column;
+    /* other styles for smaller screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .card {
+    padding: 0;
+    /* other styles for smaller screens */
+  }
 }

@@ -24,7 +24,14 @@
         <!-- //poner nombre -->
         <h1 *ngIf="imageFile">Selected Video: {{ imageFile.name }}</h1>
         <button type="button" class="btn btn-primary" (click)="openFileInput()">
-          Selecciona un video
+          <div class="button-container">
+            <img
+              src="../../assets/images/upload.png"
+              style="width: 32px; filter: invert(1); margin-right: 1rem"
+              alt="logo"
+            />
+            Selecciona un video
+          </div>
         </button>
         <button
           [disabled]="adminForm.invalid"

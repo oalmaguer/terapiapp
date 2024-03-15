@@ -13,14 +13,15 @@
   border: 1px solid B4D4FF;
   border-radius: 4px;
   margin-top: 1rem;
-  background-color: #99bc85;
+  background-color: #76c2c7;
   color: whitesmoke;
   width: 100%;
   transition: background-color 0.5s ease-in-out;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background-color: #769166;
+  background-color: #568b8f;
 }
 .user,
 .pass {
@@ -37,9 +38,9 @@
 .form-container input {
   padding-inline: 1rem;
   padding-block: 0.8rem;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #00d1df;
+  color: whitesmoke;
   border-radius: 4px;
-  background-color: #e1f0da;
 }
 
 .links {
@@ -79,4 +80,8 @@
 .logo {
   width: 180px;
   height: 180px;
+}
+
+img {
+  filter: hue-rotate(87deg);
 }

@@ -1,9 +1,9 @@
-import { Injectable, APP_INITIALIZER, NgModule } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { Injectable } from '@angular/core';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
-import * as e from 'cors';
 import { BehaviorSubject, of } from 'rxjs';
 import { environment } from 'src/environment/environment';
+import { HttpClient } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,11 +11,14 @@ export class SupabaseService {
   private supa_client: SupabaseClient;
   public patientData$ = new BehaviorSubject(null);
   public sessionInfo$ = new BehaviorSubject(null);
+  public showSidebar$ = new BehaviorSubject(true);
 
   public userInfo$ = new BehaviorSubject(null);
   public patientsList$ = new BehaviorSubject(null);
   public patientsList = this.patientsList$.asObservable();
-  constructor() {
+  public sidebarAnimation$ = new BehaviorSubject(null);
+  public localUrl = 'http://localhost:3000';
+  constructor(private http: HttpClient) {
     this.supa_client = createClient(
       environment.supabase.url,
       environment.supabase.key
@@ -30,6 +33,8 @@ export class SupabaseService {
           //   this.patientData$.next(elem.data[0]);
           // });
         } else if (event === 'SIGNED_OUT') {
+          console.log('SIGNED_OUT');
+          this.sessionInfo$.next('loggedOut');
           // handle sign out event
         } else if (event === 'PASSWORD_RECOVERY') {
           // handle password recovery event
@@ -52,6 +57,12 @@ export class SupabaseService {
     } catch (err) {
       return err.toPromise();
     }
+  }
+
+  sendQuestion(question) {
+    return this.http.post(`${this.localUrl}/askAssistant`, {
+      question: question,
+    });
   }
 
   async signOut() {

@@ -31,6 +31,9 @@ import { DividerModule } from 'primeng/divider';
 import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
 import { DataViewModule } from 'primeng/dataview';
 import { UsersService } from './users.service';
+import { MenuResponsiveComponent } from './menu-responsive/menu-responsive.component';
+import { AssistantComponent } from './assistant/assistant.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { UsersService } from './users.service';
     NotasComponent,
     CitasComponent,
     CitaPacienteComponent,
+    MenuResponsiveComponent,
+    AssistantComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ import { UsersService } from './users.service';
     InputTextareaModule,
     DividerModule,
     DataViewModule,
+    HttpClientModule,
   ],
   providers: [
     SupabaseService,

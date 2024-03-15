@@ -1,9 +1,6 @@
-:host ::ng-deep {
+:host {
   flex: 1;
-
-  .p-dropdown {
-    width: 50%;
-  }
+  margin-top: 3rem;
 }
 
 .container {
@@ -17,6 +14,8 @@
   font-size: 2rem;
   font-weight: 500;
   gap: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .option-text {
@@ -81,8 +80,32 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2.5rem;
+  justify-content: center;
 }
 
 .background {
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    justify-content: center;
+    /* other styles for smaller screens */
+  }
+
+  .content {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-block: 1rem;
+  }
+
+  .container {
+    align-items: center;
+  }
+
+  :host ::ng-deep {
+    .p-dropdown {
+      width: 240px;
+    }
+  }
 }

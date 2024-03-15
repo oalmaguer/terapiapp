@@ -1,5 +1,6 @@
 :host {
   width: 100%;
+  flex: 1;
 }
 
 :host ::ng-deep {
@@ -15,6 +16,7 @@
 
 .main {
   padding: 2rem;
+  height: 100%;
 }
 
 .btn {
@@ -54,4 +56,8 @@
   gap: 1.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.calendar {
+  height: 100%;
 }

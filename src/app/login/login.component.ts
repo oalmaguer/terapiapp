@@ -29,10 +29,12 @@ export class LoginComponent {
     this.supabaseService
       .login(this.userForm.value.email, this.userForm.value.password)
       .then((elem) => {
+        console.log(elem);
         if (elem.error) {
           this.errorMessage = elem.error.message;
           return;
         }
+        this.supabaseService.sessionInfo$.next(elem.data.session);
         this.router.navigate(['/dashboard']); // Replace 123 with the actual parameter value
       })
       .catch((err) => {});

@@ -37,10 +37,13 @@ export class NotasComponent {
     });
     this.adminForm = new FormGroup({
       patient: new FormControl([], [Validators.required]),
-      note: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      note: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
     });
-    this.getPatients();
     this.onChanges();
+    this.getPatients();
   }
 
   loadPatientNotes() {
@@ -52,6 +55,7 @@ export class NotasComponent {
 
   onChanges() {
     this.adminForm.get('patient')?.valueChanges.subscribe((patient) => {
+      console.log(patient);
       if (!patient) return;
       this.selectedPatient = this.patients.find(
         (elem) => elem.id == patient.id

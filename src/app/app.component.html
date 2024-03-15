@@ -2,8 +2,20 @@
   style="display: flex; min-height: 100vh"
   [ngClass]="{ 'center-login': !userLoggedIn }"
 >
-  <div class="sidebar" *ngIf="userLoggedIn" style="margin-right: 2rem">
-    <app-sidebar *ngIf="userRole" [role]="userRole.role"></app-sidebar>
+  <ng-container>
+    <img
+      *ngIf="!showSidebar"
+      class="menu-img"
+      (click)="showMenu()"
+      src="../../assets/images/menus.png"
+      alt="logo"
+    />
+  </ng-container>
+  <div class="sidebar">
+    <app-sidebar
+      *ngIf="userRole && userLoggedIn && showSidebar"
+      [role]="userRole.role"
+    ></app-sidebar>
   </div>
 
   <router-outlet></router-outlet>

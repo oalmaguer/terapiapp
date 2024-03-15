@@ -2,81 +2,75 @@
   <div class="card">
     <div class="card-body">
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class="form">
-          <div class="image">
-            <label for="fileInput">
-              <img
-                [src]="userForm.get('imageUrl').value"
-                class="image"
-                alt="Image"
-                *ngIf="imageUrl"
-                (click)="img.click()"
-              />
-            </label>
-            <input
-              #img
-              type="file"
-              (change)="onImageSelected($event)"
-              [ngStyle]="!imageUrl ? { display: 'block' } : { display: 'none' }"
+        <div class="image">
+          <label for="fileInput">
+            <img
+              [src]="userForm.get('imageUrl').value"
+              class="image"
+              alt="Image"
+              *ngIf="imageUrl"
+              (click)="img.click()"
             />
-            <button class="btn" *ngIf="newImage" (click)="uploadImage()">
-              Set as image profile
-            </button>
-            <p *ngIf="successMessage">Tu imagen ha sido actualizada!</p>
+          </label>
+          <input
+            #img
+            type="file"
+            (change)="onImageSelected($event)"
+            [ngStyle]="!imageUrl ? { display: 'block' } : { display: 'none' }"
+          />
+          <button class="btn" *ngIf="newImage" (click)="uploadImage()">
+            Set as image profile
+          </button>
+          <p *ngIf="successMessage">Tu imagen ha sido actualizada!</p>
+        </div>
+
+        <div class="form-group">
+          <div style="border-bottom: 1px solid #d3d3d3">
+            <p class="text" *ngIf="userRole === 'patient'">
+              Tu doctor es: <span>{{ userDoctor }}</span>
+            </p>
           </div>
 
-          <div class="form-group">
-            <div style="border-bottom: 1px solid #d3d3d3">
-              <p class="text" *ngIf="userRole === 'patient'">
-                Tu doctor es: <span>{{ userDoctor }}</span>
-              </p>
-            </div>
-
-            <div class="items">
-
+          <div class="items">
             <div class="item">
               <label for="name">Nombre</label>
               <p *ngIf="!editMode">{{ user?.name }}</p>
               <input
-              *ngIf="editMode"
-              type="name"
-              formControlName="name"
-              placeholder="Nombre"
+                *ngIf="editMode"
+                type="name"
+                formControlName="name"
+                placeholder="Nombre"
               />
-
 
               <label for="email">Email</label>
               <p *ngIf="!editMode">{{ user?.email }}</p>
-            <input
-            *ngIf="editMode"
-            type="email"
-            formControlName="email"
-            placeholder="Email"
-            />
-          </div>
-          <div class="item">
-            <label for="phone">Telefono</label>
-            <p *ngIf="!editMode">{{ user?.phone }}</p>
-            <input
-            *ngIf="editMode"
-            type="phone"
-            formControlName="phone"
-            placeholder="Telefono"
-            />
+              <input
+                *ngIf="editMode"
+                type="email"
+                formControlName="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="item">
+              <label for="phone">Telefono</label>
+              <p *ngIf="!editMode">{{ user?.phone }}</p>
+              <input
+                *ngIf="editMode"
+                type="phone"
+                formControlName="phone"
+                placeholder="Telefono"
+              />
 
-
-            <label *ngIf="userRole === 'patient'" for="skill">Lesión</label>
-            <p *ngIf="userRole === 'patient'">{{ user?.lesion }}</p>
-            <input
-            *ngIf="editMode"
-            type="lesion"
-              formControlName="lesion"
-              placeholder="Lesion"
+              <label *ngIf="userRole === 'patient'" for="skill">Lesión</label>
+              <p *ngIf="userRole === 'patient'">{{ user?.lesion }}</p>
+              <input
+                *ngIf="editMode"
+                type="lesion"
+                formControlName="lesion"
+                placeholder="Lesion"
               />
             </div>
           </div>
-        </div>
-
         </div>
       </form>
     </div>

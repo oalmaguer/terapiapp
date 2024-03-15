@@ -1,3 +1,5 @@
+$image-width: 100px;
+
 .main-container {
   width: 320px;
   display: flex;
@@ -107,6 +109,11 @@
   background-color: #0481af;
   cursor: pointer;
 }
+
+.image:hover {
+  background-color: #0481af;
+  cursor: pointer;
+}
 .text:hover {
   color: #92e3a9;
 }
@@ -144,4 +151,35 @@ h4 {
   display: flex;
   align-items: center;
   padding: 0.5rem;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .main-container {
+    width: 100px;
+    /* other styles for smaller screens */
+  }
+
+  .item {
+    display: block;
+  }
+  .item * {
+    margin: 0;
+  }
+  .item a,
+  .image-info {
+    display: none;
+  }
+
+  .main-logo {
+    position: absolute;
+    left: 30%;
+  }
+  .image-box {
+    width: 100%;
+    text-align: center;
+  }
+  .copyright p {
+    margin: 0;
+  }
 }

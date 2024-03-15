@@ -1,5 +1,6 @@
 :host {
   width: 100%;
+  margin-top: 2rem;
 }
 :host::ng-deep {
   .p-dropdown {
@@ -56,13 +57,16 @@
   border: 1px solid B4D4FF;
   border-radius: 4px;
   margin-top: 1rem;
-  background-color: #99bc85;
+  background-color: #85bae6;
   color: whitesmoke;
   width: 100%;
   transition: background-color 0.5s ease-in-out;
+  padding: 0.5rem;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
 }
 .patient-container button:hover {
-  background-color: #769166;
+  background-color: #5188b5;
 }
 
 .form-group {
@@ -77,8 +81,6 @@
   margin-top: 1rem;
   flex: 1;
   padding: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .no-notes {

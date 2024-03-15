@@ -12,7 +12,7 @@ export class CitaPacienteComponent {
   constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit(): void {
-    this.supabaseService.patientData$.subscribe((elem) => {
+    this.supabaseService.userInfo$.subscribe((elem) => {
       if (elem) {
         this.patient = elem;
         this.getPatientAppointment();

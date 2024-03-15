@@ -40,24 +40,6 @@ export class AuthGuard implements CanActivate {
     });
   }
 
-  async checkLogin() {
-    const user = this.supabaseService.getSupabaseClient().auth.getUser();
-    let hasUser = false;
-    if (user) {
-      // User is authenticated, allow access
-      user.then((elem) => {
-        this.supabaseService.sessionInfo$.next(elem);
-
-        hasUser = true;
-      });
-    } else {
-      // Redirect to the login page if the user is not authenticated
-
-      this.router.navigate(['/login']);
-    }
-    return hasUser;
-  }
-
   userStatus() {
     console.log('checking login');
 

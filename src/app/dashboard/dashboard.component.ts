@@ -29,10 +29,11 @@ export class DashboardComponent {
     this.supabaseService.userInfo$.subscribe((user) => {
       // this.user = user.data[0];
       console.log(user);
-      this.user = user;
-      // this.getUserImage(this.user);
-      this.userRole = user.role;
-      this.getPatients();
+      if (user) {
+        this.user = user;
+        this.userRole = user.role;
+        this.getPatients();
+      }
     });
   }
 

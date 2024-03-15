@@ -12,6 +12,7 @@ import { RegisterDoctorsComponent } from './register-doctors/register-doctors.co
 import { NotasComponent } from './notas/notas.component';
 import { CitasComponent } from './citas/citas.component';
 import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
+import { AssistantComponent } from './assistant/assistant.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -45,6 +46,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  {
+    path: 'asistente',
+    component: AssistantComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

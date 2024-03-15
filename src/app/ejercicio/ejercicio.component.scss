@@ -1,10 +1,14 @@
+:host {
+  width: 100%;
+}
+
 :host::ng-deep {
   .p-dropdown {
     width: 100%;
   }
 
   p-card {
-    width: 30%;
+    max-width: 350px;
   }
 }
 
@@ -13,15 +17,15 @@
   gap: 1rem;
   padding: 2rem;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .video {
-  border: 1px solid #d3d3d3;
   border-radius: 10px;
   width: 100%;
   padding: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  // box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+  //   rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .video-info {
@@ -105,4 +109,26 @@ textarea {
   border-radius: 5px;
   width: 100%;
   border: 1px solid #d3d3d3;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    justify-content: center;
+    /* other styles for smaller screens */
+  }
+
+  .videos {
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  :host {
+    margin-top: 3rem;
+    ng-deep {
+      p-card {
+        min-width: 30%;
+      }
+    }
+  }
 }

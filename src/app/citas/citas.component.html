@@ -1,12 +1,15 @@
 <div class="main">
   <div class="calendar">
-    <form [formGroup]="form">
+    <form [formGroup]="form" style="height: 100%">
       <h1>Selecciona una fecha</h1>
-      <full-calendar [options]="calendarOptions"></full-calendar>
+      <full-calendar
+        class="calendar"
+        [options]="calendarOptions"
+      ></full-calendar>
       <p-dialog
         header="Fecha seleccionada: {{ selectedCalendarDate?.dateStr }}"
         [(visible)]="showSetDate"
-        [style]="{ width: '50vw' }"
+        [style]="{ width: '80vh' }"
         [modal]="true"
         [closeOnEscape]="true"
         (onHide)="onClose()"

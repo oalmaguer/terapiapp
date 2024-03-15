@@ -4,6 +4,13 @@ import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 import { Subscription, filter } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +25,8 @@ export class SidebarComponent {
   userImage: any;
   imageUrl: any;
   userForm: FormGroup = new FormGroup({});
-
+  displayMenu = true;
+  anim = 'out';
   constructor(
     private router: Router,
     private usersService: UsersService,
@@ -36,6 +44,14 @@ export class SidebarComponent {
         this.getUserImage(this.user);
       }
     });
+
+    this.supabaseService.sidebarAnimation$.subscribe((elem) => {
+      this.anim = elem;
+    });
+  }
+
+  showSidebar() {
+    this.supabaseService.showSidebar$.next(false);
   }
 
   imageChanges() {
@@ -67,10 +83,18 @@ export class SidebarComponent {
 
   logOut() {
     localStorage.clear();
+    console.log('deslogueate');
     // this.afAuth.signOut();
     this.router.navigate(['login']);
     this.supabaseService.sessionInfo$.next(null);
     this.supabaseService.patientData$.next(null);
+    this.supabaseService.userInfo$.next(null);
     this.supabaseService.signOut();
+  }
+
+  showMenu() {
+    console.log(this.displayMenu);
+    this.displayMenu = !this.displayMenu;
+    this.supabaseService.showSidebar$.next(this.displayMenu);
   }
 }
