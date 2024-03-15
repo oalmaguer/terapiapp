@@ -10,7 +10,7 @@
 .container {
   padding: 2rem;
   display: flex;
-  gap: 10rem;
+  gap: 5rem;
 }
 
 .select-patients {
@@ -107,4 +107,19 @@
 
 .note h3 {
   margin: 0;
+}
+
+@media (max-width: 1100px) {
+
+  .container {
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  textarea {
+    width: 100%;
+  }
+  .patient-container {
+    align-items: center;
+  }
 }

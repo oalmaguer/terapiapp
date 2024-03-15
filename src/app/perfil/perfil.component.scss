@@ -20,6 +20,7 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 .image img {
@@ -90,7 +91,7 @@ button {
   display: flex;
   flex-direction: column;
   background-color: whitesmoke;
-  max-width: 100%;
+  width: 100%;
   padding: 2rem;
   margin-top: 2rem;
   border-radius: 15px 15px 15px 15px;
@@ -139,6 +140,8 @@ button {
     flex-direction: column;
     /* other styles for smaller screens */
   }
+
+
 }
 
 @media (max-width: 500px) {
