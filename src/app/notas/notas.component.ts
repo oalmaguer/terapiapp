@@ -27,7 +27,6 @@ export class NotasComponent {
   ngOnInit() {
     this.supabaseService.userInfo$.subscribe((user) => {
       if (user) {
-        console.log(user);
         this.user = user;
         this.userRole = user.role;
         if (this.userRole == 'patient') {
@@ -48,14 +47,12 @@ export class NotasComponent {
 
   loadPatientNotes() {
     this.supabaseService.getNotes(this.user.id).then((data) => {
-      console.log(data);
       this.patientNotes = data.data;
     });
   }
 
   onChanges() {
     this.adminForm.get('patient')?.valueChanges.subscribe((patient) => {
-      console.log(patient);
       if (!patient) return;
       this.selectedPatient = this.patients.find(
         (elem) => elem.id == patient.id
@@ -107,7 +104,6 @@ export class NotasComponent {
     this.supabaseService
       .getNotes(userId ? userId : this.selectedPatient.id)
       .then((data) => {
-        console.log(data);
         if (data.data) {
           // this.adminForm.get('note')?.setValue(data.data[0].note);
           this.patientNotes = data.data;

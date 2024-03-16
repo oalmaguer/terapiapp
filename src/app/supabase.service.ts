@@ -33,7 +33,6 @@ export class SupabaseService {
           //   this.patientData$.next(elem.data[0]);
           // });
         } else if (event === 'SIGNED_OUT') {
-          console.log('SIGNED_OUT');
           this.sessionInfo$.next('loggedOut');
           // handle sign out event
         } else if (event === 'PASSWORD_RECOVERY') {
@@ -126,7 +125,6 @@ export class SupabaseService {
       .eq('email', user.email)
       .then((elem) => {
         if (elem) {
-          console.log(elem);
           this.userInfo$.next(elem.data[0]);
         }
       });
@@ -199,7 +197,6 @@ export class SupabaseService {
     }
 
     let rmDup = new Set(videos.map((elem) => elem));
-    console.log(rmDup);
 
     await this.supa_client.from('asignaciones').insert({
       paciente_id: patiendId,

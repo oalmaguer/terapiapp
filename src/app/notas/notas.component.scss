@@ -24,13 +24,15 @@
   flex-direction: column;
   font-size: 1rem;
   margin-top: 2rem;
+  align-items: center;
+  gap: 0.7rem;
 }
 
 .patient-container p {
   font-weight: 300;
   padding-bottom: 0.2rem;
   border-bottom: 1px solid #d3d3d3;
-
+  width: 100%;
   margin: 0.5rem;
 }
 .patient-container span {
@@ -43,6 +45,7 @@
   padding-block: 0.4rem;
   padding-inline: 0.5rem;
   height: 100px;
+  width: 100%;
 }
 .patient-container img {
   max-width: 300px;
@@ -110,7 +113,6 @@
 }
 
 @media (max-width: 1100px) {
-
   .container {
     flex-direction: column;
     gap: 0rem;

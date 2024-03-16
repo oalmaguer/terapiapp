@@ -34,6 +34,8 @@ import { UsersService } from './users.service';
 import { MenuResponsiveComponent } from './menu-responsive/menu-responsive.component';
 import { AssistantComponent } from './assistant/assistant.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -69,10 +71,11 @@ import { HttpClientModule } from '@angular/common/http';
     DividerModule,
     DataViewModule,
     HttpClientModule,
+    ToastModule,
   ],
   providers: [
     SupabaseService,
-    UsersService,
+    MessageService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeSupabase,

@@ -1,4 +1,4 @@
-<div class="main-container" *ngIf="displayMenu">
+<!-- <div class="main-container" *ngIf="displayMenu">
   <div class="main-logo">
     <img
       style="width: 64px; filter: hue-rotate(85deg)"
@@ -100,6 +100,110 @@
   <!-- <div class="sidebar-image">
     <img src="../../assets/svg/Doctors-bro.svg" alt="" />
   </div> -->
+
+<div class="sidebar-container">
+  <div class="profile-pic">
+    <img src="{{ imageUrl }}" alt="profile pic" />
+  </div>
+  <div class="menu">
+    <div
+      routerLink="/dashboard"
+      (click)="setItem(1)"
+      class="menu-item"
+      [ngClass]="itemSelected == 1 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/home.svg" alt="logo" />
+      <a routerLink="/dashboard">Inicio</a>
+    </div>
+    <div
+      class="menu-item"
+      (click)="setItem(2)"
+      routerLink="/perfil"
+      [ngClass]="itemSelected == 2 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/perfil.svg" alt="logo" />
+
+      <a routerLink="/perfil">Perfil</a>
+    </div>
+    <div
+      routerLink="/notas"
+      (click)="setItem(3)"
+      class="menu-item"
+      [ngClass]="itemSelected == 3 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/notes.svg" alt="logo" />
+      <a routerLink="/notas">{{
+        userRole === "admin" || userRole === "doctor"
+          ? "Pacientes"
+          : "Notas de Doctor"
+      }}</a>
+    </div>
+    <div
+      routerLink="/ejercicios"
+      (click)="setItem(4)"
+      class="menu-item"
+      [ngClass]="itemSelected === 4 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/exercise.svg" alt="logo" />
+
+      <a routerLink="/ejercicios">Ejercicios</a>
+    </div>
+    <div
+      *ngIf="userRole === 'admin' || userRole === 'doctor'"
+      routerLink="/admin"
+      (click)="setItem(5)"
+      class="menu-item"
+      [ngClass]="itemSelected === 5 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/video.svg" alt="logo" />
+
+      <a routerLink="/admin">Agregar video</a>
+    </div>
+    <div
+      *ngIf="userRole === 'admin' || userRole === 'doctor'"
+      [routerLink]="['/citas']"
+      (click)="setItem(6)"
+      class="menu-item"
+      [ngClass]="itemSelected === 6 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/cita.svg" alt="logo" />
+
+      <a [routerLink]="['/citas']" target="_blank">Citas</a>
+    </div>
+
+    <div
+      *ngIf="userRole === 'patient'"
+      [routerLink]="['/citaPaciente']"
+      (click)="setItem(7)"
+      class="menu-item"
+      [ngClass]="itemSelected === 7 ? 'selected' : ''"
+    >
+      <img style="width: 32px" src="../../assets/svg/cita.svg" alt="logo" />
+
+      <a [routerLink]="['/citaPaciente']" target="_blank">Ver mis citas</a>
+    </div>
+
+    <div
+      *ngIf="userRole === 'admin' || userRole === 'doctor'"
+      [routerLink]="['/asistente']"
+      (click)="setItem(8)"
+      class="menu-item"
+      [ngClass]="itemSelected === 8 ? 'selected' : ''"
+    >
+      <img
+        style="width: 32px"
+        src="../../assets/images/mascot.png"
+        alt="logo"
+      />
+      <a [routerLink]="['/asistente']" target="_blank">Mi Asistente</a>
+    </div>
+
+    <div (click)="logOut()" class="menu-item">
+      <img style="width: 32px" src="../../assets/svg/exit.png" alt="logo" />
+
+      <a (click)="logOut()" target="_blank">Cerrar Sesión</a>
+    </div>
+  </div>
 
   <div class="copyright">
     <p>© 2024 Terapiapp</p>

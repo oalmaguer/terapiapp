@@ -21,14 +21,12 @@ export class AuthGuard implements CanActivate {
     private supabaseService: SupabaseService
   ) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-    console.log('entra al can activate');
-
     if (this.sessionStore) {
       return true;
     }
     this.supabaseService.getSession().then((elem) => {
       this.supabaseService.sessionInfo$.next(elem.data.session);
-      console.log(elem);
+
       if (elem?.data.session.user.role === 'authenticated') {
         this.sessionStore = elem.data.session;
         // User is authenticated, allow access
@@ -41,8 +39,6 @@ export class AuthGuard implements CanActivate {
   }
 
   userStatus() {
-    console.log('checking login');
-
     this.usersService.userIsLoggedIn$.subscribe((aUser: any | null) => {
       //handle auth state changes here. Note, that user will be null if there is no currently logged in user.
       aUser;

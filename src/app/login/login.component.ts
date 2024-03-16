@@ -29,7 +29,6 @@ export class LoginComponent {
     this.supabaseService
       .login(this.userForm.value.email, this.userForm.value.password)
       .then((elem) => {
-        console.log(elem);
         if (elem.error) {
           this.errorMessage = elem.error.message;
           return;

@@ -84,11 +84,10 @@ export class CitasComponent {
       selectable: true,
       aspectRatio: 3,
       // eventClick: (arg) => {
-      //   console.log(arg);
+      //
       // },
     };
     this.supabaseService.patientsList$.subscribe((elem) => {
-      console.log(elem);
       if (elem) {
         this.patients = elem;
         // this.processCitasForCalendar();
@@ -122,7 +121,7 @@ export class CitasComponent {
     let hourOcuppied = this.citas.filter((cita) => {
       return cita.fecha_inicio == formatHour;
     });
-    console.log(hourOcuppied);
+
     if (hourOcuppied && hourOcuppied.length > 0) {
       this.disableBtn = true;
       this.dateValid = false;

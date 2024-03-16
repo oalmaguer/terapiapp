@@ -4,6 +4,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-ejercicio',
   templateUrl: './ejercicio.component.html',
@@ -40,11 +42,14 @@ export class EjercicioComponent {
   userRole: string | null = 'null';
   videoSelected;
   visible: boolean;
+  openToast: any;
+  loading = false;
   constructor(
     private supabaseService: SupabaseService,
     private sanitizer: DomSanitizer,
-    private cd: ChangeDetectorRef
+    private messageService: MessageService
   ) {}
+
   ngOnInit() {
     this.userForm = new FormGroup({
       patient: new FormControl([], [Validators.required]),
@@ -58,6 +63,7 @@ export class EjercicioComponent {
     this.supabaseService.userInfo$.subscribe((elem) => {
       this.user = elem;
       if (this.user) {
+        this.userRole = this.user.role;
         this.getUserVideos(this.user.video);
       }
     });
@@ -86,7 +92,7 @@ export class EjercicioComponent {
       this.videoSelected = null;
       return;
     }
-    console.log(id);
+
     this.videoSelected = id;
   }
 
@@ -102,7 +108,6 @@ export class EjercicioComponent {
       return;
     }
 
-    console.log(data);
     let removeEmpty = data.filter(
       (elem) => elem.name !== '.emptyFolderPlaceholder'
     );
@@ -117,6 +122,11 @@ export class EjercicioComponent {
       };
     });
 
+    if (this.user.role == 'doctor' || this.user.role == 'admin') {
+      this.videos = new_array;
+      return;
+    }
+
     let newvideos = new_array.filter((elem) => {
       return videos.includes(elem.name.split('.')[0]);
     });
@@ -128,10 +138,7 @@ export class EjercicioComponent {
 
       this.hasVideos = this.videos.length > 0;
     }
-    if (this.user.role == 'doctor' || this.user.role == 'admin') {
-      console.log('no es paciente');
-      this.videos = new_array;
-    }
+
     this.addExerciseInfo();
   }
 
@@ -154,7 +161,6 @@ export class EjercicioComponent {
 
   onChanges() {
     this.userForm.get('patient')?.valueChanges.subscribe((user) => {
-      console.log(user);
       this.selectedPatient = user;
       this.userVideos = this.selectedPatient.video;
     });
@@ -168,7 +174,6 @@ export class EjercicioComponent {
 
   onPatientSelect(id, event) {
     this.selectedPatient = this.patients.find((elem) => elem.id == event);
-
     this.selectedVideoId = id;
   }
 
@@ -179,6 +184,11 @@ export class EjercicioComponent {
         if (elem) {
           this.patients = elem;
           this.doctorId = this.user.doctor;
+          console.log(this.user);
+          this.patients = this.patients.filter(
+            (patient) => patient.id !== this.user.id
+          );
+          console.log(this.patients);
         }
       });
   }
@@ -209,15 +219,28 @@ export class EjercicioComponent {
     }
   }
 
-  async assignVideo(id, patient) {
-    await this.supabaseService.assignVideo(
-      this.userVideos,
-      this.videoSelected,
-      this.selectedPatient.id,
-      this.ejercicioForm.value.series,
-      this.ejercicioForm.value.repeticiones,
-      this.ejercicioForm.value.comentarios
-    );
+  async assignVideo() {
+    this.loading = true;
+
+    await this.supabaseService
+      .assignVideo(
+        this.userVideos,
+        this.videoSelected,
+        this.selectedPatient.id,
+        this.ejercicioForm.value.series,
+        this.ejercicioForm.value.repeticiones,
+        this.ejercicioForm.value.comentarios
+      )
+      .then((resp) => {
+        if (resp.status === 204) {
+          console.log('resp: ', resp);
+          this.showToast(true);
+        } else {
+          this.showToast(false);
+        }
+        this.loading = false;
+      });
+
     this.getPatients();
   }
 
@@ -225,5 +248,21 @@ export class EjercicioComponent {
     this.userForm.patchValue({
       patient: this.selectedPatient.id,
     });
+  }
+
+  showToast(status) {
+    if (status) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Asignación exitosa',
+        detail: 'Tu video ha sido asignado con exito',
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ha ocurrido un error',
+        detail: 'Vuelve a intentarlo',
+      });
+    }
   }
 }

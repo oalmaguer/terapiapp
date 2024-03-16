@@ -13,17 +13,19 @@
 }
 
 .videos {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
   padding: 2rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .video {
   border-radius: 10px;
-  width: 100%;
+  min-width: 30%;
+  max-width: 400px;
   padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
   // box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
   //   rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
@@ -53,10 +55,13 @@ h1 {
   padding: 0.8rem;
   border: 1px solid #d3d3d3;
   border-radius: 4px;
+  color: whitesmoke;
+  font-weight: 600;
   margin-top: 1rem;
-  color: black;
   width: 100%;
+  background-color: #498f6b;
   transition: background-color 0.5s ease-in-out;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -97,7 +102,12 @@ iframe {
 .patient-info {
   display: flex;
   gap: 1rem;
-  color: black;
+  color: whitesmoke;
+  justify-content: space-evenly;
+  font-weight: 600;
+  background-color: #35b386;
+  border: 1px solid #d3d3d3;
+  padding: 1rem;
 }
 
 .patient-info span {
@@ -131,4 +141,63 @@ textarea {
       }
     }
   }
+}
+
+@media (max-width: 1024px) {
+  .videos {
+    justify-content: center;
+    /* other styles for smaller screens */
+  }
+  .video {
+    max-width: 100%;
+  }
+}
+
+//* HTML: <div class="loader"></div> */
+.loader {
+  --s: 28px;
+  height: var(--s);
+  aspect-ratio: 2.5;
+  --_g: #000 90%, #0000;
+  --_g0: no-repeat radial-gradient(farthest-side, var(--_g));
+  --_g1: no-repeat radial-gradient(farthest-side at top, var(--_g));
+  --_g2: no-repeat radial-gradient(farthest-side at bottom, var(--_g));
+  background: var(--_g0), var(--_g1), var(--_g2), var(--_g0), var(--_g1),
+    var(--_g2);
+  background-size: 20% 50%, 20% 25%, 20% 25%;
+  animation: l45 1s infinite;
+}
+@keyframes l45 {
+  0% {
+    background-position: calc(0 * 100% / 3) 50%,
+      calc(1 * 100% / 3) calc(50% + calc(var(--s) / 8)),
+      calc(1 * 100% / 3) calc(50% - calc(var(--s) / 8)), calc(3 * 100% / 3) 50%,
+      calc(2 * 100% / 3) calc(50% + calc(var(--s) / 8)),
+      calc(2 * 100% / 3) calc(50% - calc(var(--s) / 8));
+  }
+  33% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 100%,
+      calc(1 * 100% / 3) 0, calc(3 * 100% / 3) 50%, calc(2 * 100% / 3) 100%,
+      calc(2 * 100% / 3) 0;
+  }
+  66% {
+    background-position: calc(1 * 100% / 3) 50%, calc(0 * 100% / 3) 100%,
+      calc(0 * 100% / 3) 0, calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 100%,
+      calc(3 * 100% / 3) 0;
+  }
+  90%,
+  100% {
+    background-position: calc(1 * 100% / 3) 50%,
+      calc(0 * 100% / 3) calc(50% + calc(var(--s) / 8)),
+      calc(0 * 100% / 3) calc(50% - calc(var(--s) / 8)), calc(2 * 100% / 3) 50%,
+      calc(3 * 100% / 3) calc(50% + calc(var(--s) / 8)),
+      calc(3 * 100% / 3) calc(50% - calc(var(--s) / 8));
+  }
+}
+
+.load {
+  display: flex;
+  justify-content: center;
+  margin-block: 1rem;
+  width: 100%;
 }

@@ -1,47 +1,45 @@
 <div class="main-container">
-  <form [formGroup]="form">
-    <div class="form">
-      <img class="mascot" src="../../assets/images/mascot.png" alt="logo" />
-      <div class="loader" *ngIf="loading"></div>
+  <img class="mascot" src="../../assets/images/mascot.png" alt="logo" />
+  <form [formGroup]="form" class="form">
+    <div class="loader" *ngIf="loading"></div>
 
-      <div class="questions" *ngIf="!assistantResponse.length && !loading">
-        <div class="question" (click)="setQuestion(q1)">
-          <p>{{ q1 }}</p>
-        </div>
-        <div class="question" (click)="setQuestion(q2)">
-          <p>{{ q2 }}</p>
-        </div>
-        <div class="question" (click)="setQuestion(q3)">
-          <p>{{ q3 }}</p>
-        </div>
-        <div class="question" (click)="setQuestion(q4)">
-          <p>{{ q4 }}</p>
-        </div>
+    <div class="questions" *ngIf="!assistantResponse.length && !loading">
+      <div class="question" (click)="setQuestion(q1)">
+        <p>{{ q1 }}</p>
       </div>
-      <div class="response" *ngIf="assistantResponse.length">
-        <h2>Respuesta</h2>
-        <p *ngFor="let assistantResponse of assistantResponse">
-          {{
-            assistantResponse.question
-              ? "Pregunta: " + assistantResponse.question
-              : "Respuesta: " + assistantResponse
-          }}
-        </p>
+      <div class="question" (click)="setQuestion(q2)">
+        <p>{{ q2 }}</p>
       </div>
-      <input
-        type="text"
-        formControlName="question"
-        placeholder="Pregunta al asistente"
-      />
-      <button
-        [ngClass]="{ 'btn-invalid': form.invalid }"
-        class="btn-send"
-        type="submit"
-        [disabled]="!form.valid"
-        (click)="onSubmit()"
-      >
-        <img src="../../assets/images/enviar.png" alt="logo" />
-      </button>
+      <div class="question" (click)="setQuestion(q3)">
+        <p>{{ q3 }}</p>
+      </div>
+      <div class="question" (click)="setQuestion(q4)">
+        <p>{{ q4 }}</p>
+      </div>
     </div>
+    <div class="response" *ngIf="assistantResponse.length">
+      <h2>Respuesta</h2>
+      <p *ngFor="let assistantResponse of assistantResponse">
+        {{
+          assistantResponse.question
+            ? "Pregunta: " + assistantResponse.question
+            : "Respuesta: " + assistantResponse
+        }}
+      </p>
+    </div>
+    <input
+      type="text"
+      formControlName="question"
+      placeholder="Pregunta al asistente"
+    />
+    <button
+      [ngClass]="{ 'btn-invalid': form.invalid }"
+      class="btn-send"
+      type="submit"
+      [disabled]="!form.valid"
+      (click)="onSubmit()"
+    >
+      <img src="../../assets/images/enviar.png" alt="logo" />
+    </button>
   </form>
 </div>

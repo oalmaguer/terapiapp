@@ -4,13 +4,6 @@ import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 import { Subscription, filter } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +11,8 @@ import {
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
+  itemSelected: any;
+
   userRole: string | null = 'null';
   private subscription: Subscription = new Subscription();
   @Input() role: string | null = 'null';
@@ -37,7 +32,6 @@ export class SidebarComponent {
   ngOnInit() {
     this.imageChanges();
     this.supabaseService.userInfo$.subscribe((elem) => {
-      console.log(elem);
       if (elem) {
         this.user = elem;
         this.userRole = elem.role;
@@ -48,6 +42,10 @@ export class SidebarComponent {
     this.supabaseService.sidebarAnimation$.subscribe((elem) => {
       this.anim = elem;
     });
+  }
+
+  setItem(idx) {
+    this.itemSelected = idx;
   }
 
   showSidebar() {
@@ -83,7 +81,7 @@ export class SidebarComponent {
 
   logOut() {
     localStorage.clear();
-    console.log('deslogueate');
+
     // this.afAuth.signOut();
     this.router.navigate(['login']);
     this.supabaseService.sessionInfo$.next(null);
@@ -93,7 +91,6 @@ export class SidebarComponent {
   }
 
   showMenu() {
-    console.log(this.displayMenu);
     this.displayMenu = !this.displayMenu;
     this.supabaseService.showSidebar$.next(this.displayMenu);
   }

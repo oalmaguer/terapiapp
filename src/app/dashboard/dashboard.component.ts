@@ -25,10 +25,9 @@ export class DashboardComponent {
     private supabaseService: SupabaseService
   ) {}
   ngOnInit(): void {
-    console.log('entra');
     this.supabaseService.userInfo$.subscribe((user) => {
       // this.user = user.data[0];
-      console.log(user);
+
       if (user) {
         this.user = user;
         this.userRole = user.role;
@@ -39,7 +38,7 @@ export class DashboardComponent {
 
   // getUserData(userData) {
   //   let user = this.supabaseService.userInfo$.subscribe((userInfo) => {
-  //     console.log(userInfo);
+  //
   //     this.user = userInfo.data[0];
   //     this.getUserImage(this.user);
   //   });
@@ -87,7 +86,6 @@ export class DashboardComponent {
 
   getPatients() {
     this.supabaseService.patientsList$.subscribe((data) => {
-      console.log(data);
       if (data) {
         this.patients = data;
       }

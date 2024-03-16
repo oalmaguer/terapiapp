@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from '../supabase.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin',
@@ -8,12 +9,16 @@ import { SupabaseService } from '../supabase.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent {
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private messageService: MessageService
+  ) {}
   adminForm: FormGroup;
   user;
   imageFile: any;
   showError: boolean = false;
   successMessage: boolean = false;
+  loading: boolean = false;
 
   ngOnInit() {
     this.adminForm = new FormGroup({
@@ -29,7 +34,9 @@ export class AdminComponent {
 
     this.adminForm.get('video').valueChanges.subscribe((elem) => {
       if (elem) {
-        let name = elem.split('.')[1];
+        console.log(elem);
+        let idx = elem.lastIndexOf('.');
+        let name = elem.slice(idx + 1);
         name !== 'mp4' ? this.resetVideo() : this.showName();
       }
     });
@@ -61,6 +68,7 @@ export class AdminComponent {
   }
 
   async onUpload(name: string) {
+    this.loading = true;
     const { data, error } = await this.supabaseService
       .getStorage()
       .from('videos')
@@ -70,17 +78,33 @@ export class AdminComponent {
       console.error(error);
       return;
     }
-    console.log(data);
+
     if (data) {
-      this.successMessage = true;
+      this.loading = false;
+      this.showToast(true);
+    } else {
+      this.loading = false;
+      this.showToast(false);
     }
-    // this.successMessage = true;
-    // setTimeout(() => {
-    //   this.successMessage = false;
-    // }, 3000);
   }
 
   openFileInput() {
     document.getElementById('fileInput').click();
+  }
+
+  showToast(status) {
+    if (status) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Asignación exitosa',
+        detail: 'Tu video ha sido asignado con exito',
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ha ocurrido un error',
+        detail: 'Vuelve a intentarlo',
+      });
+    }
   }
 }

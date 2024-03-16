@@ -42,7 +42,6 @@ export class CitaPacienteComponent {
           fecha_inicio: result,
         };
       });
-      console.log(this.citas);
     });
   }
 }

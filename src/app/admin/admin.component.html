@@ -19,10 +19,13 @@
           formControlName="video"
           (change)="onVideoSelected($event)"
         />
-        <h1 *ngIf="successMessage">Video subido con exito</h1>
-        <h1 *ngIf="showError">Tu video tiene que ser formato .mp4 !</h1>
+        <!-- <h1 *ngIf="successMessage">Video subido con exito</h1> -->
+        <h3 *ngIf="showError">Tu video tiene que ser formato .mp4 !</h3>
         <!-- //poner nombre -->
-        <h1 *ngIf="imageFile">Selected Video: {{ imageFile.name }}</h1>
+        <h3 *ngIf="imageFile">Video Seleccionado: {{ imageFile.name }}</h3>
+        <div *ngIf="loading" class="load">
+          <div class="loader"></div>
+        </div>
         <button type="button" class="btn btn-primary" (click)="openFileInput()">
           <div class="button-container">
             <img
@@ -53,3 +56,7 @@
     </form>
   </div>
 </div>
+
+<ng-container>
+  <p-toast position="top-right"></p-toast>
+</ng-container>

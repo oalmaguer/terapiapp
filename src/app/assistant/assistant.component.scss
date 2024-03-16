@@ -6,7 +6,9 @@
 .main-container {
   padding: 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   height: 100%;
 }
 
@@ -16,19 +18,20 @@
   gap: 1rem;
   justify-content: flex-end;
   align-items: center;
-  height: 100%;
+  width: 100%;
 }
 
 .questions {
-  display: flex;
+  display: grid;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  // grid-template-columns: repeat(auto-fit, minmax(350px, 2fr));
+  grid-template-columns: 1fr 1fr; // Two equal columns
   align-items: flex-start;
   justify-content: center;
+  width: 80%;
 }
 
 .question {
-  width: 40%;
   padding: 1.5rem;
   background-color: #286ba1;
   border-radius: 10px;
@@ -135,8 +138,8 @@ input {
 }
 
 @media (max-width: 1161px) {
-  .question {
-    width: 100%;
+  .questions {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 2fr));
   }
 
   .main-container {

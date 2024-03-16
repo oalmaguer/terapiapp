@@ -54,7 +54,6 @@ export class AppComponent {
     //Add 'implements OnInit' to the class.
     this.displayOrHideSidebar();
     this.supabaseService.sessionInfo$.subscribe((elem) => {
-      console.log(elem);
       if (elem && elem !== 'loggedOut') {
         this.userSession = elem;
         this.userLoggedIn = true;
@@ -75,7 +74,6 @@ export class AppComponent {
   }
 
   getPatients() {
-    console.log('get patients');
     this.supabaseService.getPatients().then((data) => {
       // GETS ALL THE PATIENTS
       // THEN

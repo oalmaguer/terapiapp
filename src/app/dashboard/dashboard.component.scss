@@ -3,6 +3,17 @@
   margin-top: 3rem;
 }
 
+:host ::ng-deep {
+  p-dropdown {
+    width: 100%;
+    text-align: center;
+  }
+
+  .p-dropdown {
+    width: 80%;
+  }
+}
+
 .container {
   margin-top: 2rem;
   display: flex;
@@ -100,13 +111,16 @@
     margin-block: 1rem;
   }
 
-  .container {
-    align-items: center;
-  }
-
   :host ::ng-deep {
     .p-dropdown {
       width: 240px;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .content {
+    text-align: center;
+    /* other styles for smaller screens */
   }
 }
