@@ -16,7 +16,12 @@ import { AssistantComponent } from './assistant/assistant.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AuthGuard],
+    data: { title: 'login' },
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,

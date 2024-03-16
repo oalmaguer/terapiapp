@@ -21,14 +21,19 @@ export class AuthGuard implements CanActivate {
     private supabaseService: SupabaseService
   ) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+    const expectedRoles = next.data.title;
+
     if (this.sessionStore) {
       return true;
     }
     this.supabaseService.getSession().then((elem) => {
       this.supabaseService.sessionInfo$.next(elem.data.session);
 
-      if (elem?.data.session.user.role === 'authenticated') {
+      if (elem?.data.session) {
         this.sessionStore = elem.data.session;
+        if (expectedRoles === 'login') {
+          this.router.navigate(['/dashboard']);
+        }
         // User is authenticated, allow access
         return true; // elem is authenticated, allow access
       } else {
@@ -36,6 +41,13 @@ export class AuthGuard implements CanActivate {
         return false; // User is not authenticated, prevent access and redirect to login
       }
     });
+  }
+
+  isLoggedIn(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+    if (this.sessionStore) {
+      return false;
+    }
+    return true;
   }
 
   userStatus() {
