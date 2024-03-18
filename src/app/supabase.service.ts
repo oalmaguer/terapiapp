@@ -20,8 +20,8 @@ export class SupabaseService {
   public localUrl = 'http://localhost:3000';
   constructor(private http: HttpClient) {
     this.supa_client = createClient(
-      environment.supabase.url,
-      environment.supabase.key
+      environment.supabaseUrl,
+      environment.supabaseKey
     );
 
     const { data } = this.supa_client.auth.onAuthStateChange(
