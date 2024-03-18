@@ -59,7 +59,7 @@ export class SupabaseService {
   }
 
   sendQuestion(question) {
-    return this.http.post(`${environment.apiUrl}/askAssistant`, {
+    return this.http.post(`https://terapiapp-back.vercel.app/askAssistant`, {
       question: question,
     });
   }

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -30,7 +29,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DividerModule } from 'primeng/divider';
 import { CitaPacienteComponent } from './cita-paciente/cita-paciente.component';
 import { DataViewModule } from 'primeng/dataview';
-import { UsersService } from './users.service';
 import { MenuResponsiveComponent } from './menu-responsive/menu-responsive.component';
 import { AssistantComponent } from './assistant/assistant.component';
 import { HttpClientModule } from '@angular/common/http';
