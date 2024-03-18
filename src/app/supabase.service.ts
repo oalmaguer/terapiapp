@@ -59,7 +59,7 @@ export class SupabaseService {
   }
 
   sendQuestion(question) {
-    return this.http.post(`${this.localUrl}/askAssistant`, {
+    return this.http.post(`${environment.apiUrl}/askAssistant`, {
       question: question,
     });
   }

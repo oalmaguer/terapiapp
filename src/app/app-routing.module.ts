@@ -27,7 +27,7 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   {
     path: 'registerDoctors',
     component: RegisterDoctorsComponent,
